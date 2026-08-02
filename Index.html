@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitsy Jam — Class Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-page: #012E40;
+  --bg-surface: #034959;
+  --bg-card: #02384D;
+  --bg-input: #02384D;
+  --border-subtle: #0A5068;
+  --border-mid: #14607A;
+
+  --pixel-purple: #9784D9;
+  --pixel-cyan: #5BBCD6;
+  --pixel-yellow: #F2DD72;
+  --pixel-green: #7CD9A0;
+  --pixel-pink: #F28972;
+  --pixel-orange: #E85B5B;
+
+  --text-body: #C5D1D8;
+  --text-strong: #EDF0F2;
+  --text-muted: #6B8A97;
+
+  --font-pixel: 'IBM Plex Sans', sans-serif;
+  --font-body: 'Source Sans 3', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { height: 100%; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg-page);
+  color: var(--text-body);
+  line-height: 1.7;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── SCANLINE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.07) 3px,
+    rgba(0,0,0,0.07) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── HEADER ── */
+.page-header {
+  padding: 1.25rem 2rem 0 2rem;
+  flex-shrink: 0;
+  border-bottom: 2px solid var(--border-subtle);
+  background: linear-gradient(180deg, rgba(1,46,64,1) 0%, rgba(1,46,64,0.9) 100%);
+}
+.header-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; padding-bottom: 0.75rem; }
+.header-left {}
+.site-title {
+  font-family: var(--font-pixel);
+  color: var(--pixel-yellow);
+  font-size: 1.1rem;
+  line-height: 1.4;
+  text-shadow: 3px 3px 0 #7c3aed, 6px 6px 0 rgba(120,100,170,0.3);
+  margin-bottom: 0.35rem;
+}
+.site-subtitle {
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.session-badge {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  color: var(--pixel-cyan);
+  background: rgba(91,188,214,0.1);
+  border: 1px solid var(--pixel-cyan);
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  line-height: 1.8;
+}
+
+/* ── TAB BAR ── */
+.tab-bar {
+  padding: 0 2rem;
+  flex-shrink: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: var(--bg-page);
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab-bar-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  gap: 3px;
+  padding-top: 0.75rem;
+}
+.tab-btn {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  padding: 0.65rem 1rem;
+  border: 2px solid var(--border-subtle);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  background: rgba(2,56,77,0.4);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  flex: 1;
+  text-align: center;
+  line-height: 1.6;
+}
+.tab-btn:hover { background: var(--bg-surface); color: var(--text-body); border-color: var(--border-mid); }
+.tab-btn.active { background: var(--bg-surface); color: var(--pixel-yellow); border-color: var(--pixel-yellow); }
+.tab-btn.active.art { color: var(--pixel-pink); border-color: var(--pixel-pink); }
+.tab-btn.active.design { color: var(--pixel-green); border-color: var(--pixel-green); }
+.tab-btn.active.tools { color: var(--pixel-cyan); border-color: var(--pixel-cyan); }
+.tab-btn.stub { opacity: 0.5; }
+
+/* ── CONTENT WRAPPER ── */
+.tab-content-wrapper {
+  flex: 1;
+  overflow: hidden;
+  border-top: 2px solid var(--border-subtle);
+}
+.tab-panel {
+  display: none;
+  height: 100%;
+  overflow-y: auto;
+  padding: 1.5rem 2rem 3rem 2rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-mid) transparent;
+}
+.tab-panel::-webkit-scrollbar { width: 5px; }
+.tab-panel::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 3px; }
+.tab-panel.active { display: block; }
+.tab-panel-inner { max-width: 900px; margin: 0 auto; }
+
+/* ── TYPOGRAPHY ── */
+h2 {
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  line-height: 1.8;
+  margin: 0 0 1rem 0;
+  color: var(--pixel-yellow);
+}
+h3 {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-strong);
+  margin: 1.25rem 0 0.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+p { margin-bottom: 1rem; font-size: 1rem; }
+strong { color: var(--text-strong); }
+
+/* ── HUB TAB ── */
+.hub-intro {
+  background: linear-gradient(135deg, rgba(151,132,217,0.12), rgba(91,188,214,0.06));
+  border: 2px solid var(--pixel-purple);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.hub-intro p { margin: 0; font-size: 1.05rem; color: var(--text-strong); }
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin: 1.25rem 0;
+}
+.nav-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.nav-card:hover { transform: translateY(-2px); }
+.nav-card.art { border-color: var(--pixel-pink); }
+.nav-card.art:hover { background: rgba(242,137,114,0.08); box-shadow: 0 4px 20px rgba(242,137,114,0.2); }
+.nav-card.design { border-color: var(--pixel-green); }
+.nav-card.design:hover { background: rgba(124,217,160,0.08); box-shadow: 0 4px 20px rgba(124,217,160,0.2); }
+.nav-card.tools { border-color: var(--pixel-cyan); }
+.nav-card.tools:hover { background: rgba(91,188,214,0.08); box-shadow: 0 4px 20px rgba(91,188,214,0.2); }
+.nav-card-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+.nav-card-title {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  line-height: 1.8;
+  margin-bottom: 0.35rem;
+}
+.nav-card.art .nav-card-title { color: var(--pixel-pink); }
+.nav-card.design .nav-card-title { color: var(--pixel-green); }
+.nav-card.tools .nav-card-title { color: var(--pixel-cyan); }
+.nav-card-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+
+.qr-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+  margin-top: 1.25rem;
+}
+.qr-placeholder {
+  width: 80px;
+  height: 80px;
+  border: 2px solid var(--pixel-yellow);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--bg-card);
+  font-size: 1.5rem;
+}
+.qr-text { font-size: 0.9rem; }
+.qr-text strong { color: var(--pixel-yellow); display: block; margin-bottom: 0.2rem; }
+.qr-url {
+  font-family: var(--font-pixel);
+  font-size: 0.45rem;
+  color: var(--pixel-cyan);
+  line-height: 2;
+  word-break: break-all;
+}
+
+/* ── ART TAB: TERM CARDS ── */
+.term-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.term-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.term-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.term-card.texture::before { background: var(--pixel-orange); }
+.term-card.scale::before { background: var(--pixel-cyan); }
+.term-card.perspective::before { background: var(--pixel-purple); }
+.term-card.color::before { background: var(--pixel-pink); }
+
+.term-card:hover { transform: translateY(-2px); border-color: var(--border-mid); }
+.term-card.active { border-color: var(--border-mid); }
+.term-card.texture.active { border-color: var(--pixel-orange); background: rgba(232,91,91,0.06); }
+.term-card.scale.active { border-color: var(--pixel-cyan); background: rgba(91,188,214,0.06); }
+.term-card.perspective.active { border-color: var(--pixel-purple); background: rgba(151,132,217,0.06); }
+.term-card.color.active { border-color: var(--pixel-pink); background: rgba(242,137,114,0.06); }
+
+.term-label {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  line-height: 1.8;
+  margin-bottom: 0.4rem;
+}
+.term-card.texture .term-label { color: var(--pixel-orange); }
+.term-card.scale .term-label { color: var(--pixel-cyan); }
+.term-card.perspective .term-label { color: var(--pixel-purple); }
+.term-card.color .term-label { color: var(--pixel-pink); }
+
+.term-teaser { font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; }
+.term-cta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.term-card.active .term-cta { display: none; }
+
+/* ── TERM DETAIL PANEL ── */
+.term-detail {
+  display: none;
+  background: var(--bg-surface);
+  border: 2px solid var(--border-mid);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  animation: slideDown 0.2s ease;
+}
+.term-detail.visible { display: block; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+.term-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.term-detail-title {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  line-height: 1.8;
+}
+.term-detail.texture .term-detail-title { color: var(--pixel-orange); }
+.term-detail.scale .term-detail-title { color: var(--pixel-cyan); }
+.term-detail.perspective .term-detail-title { color: var(--pixel-purple); }
+.term-detail.color .term-detail-title { color: var(--pixel-pink); }
+
+.close-btn {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  background: none;
+  border: 1px solid var(--border-mid);
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+.close-btn:hover { border-color: var(--pixel-pink); color: var(--pixel-pink); }
+
+.definition-box {
+  background: var(--bg-card);
+  border-left: 4px solid;
+  border-radius: 0 8px 8px 0;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.95rem;
+  color: var(--text-strong);
+  line-height: 1.65;
+}
+.term-detail.texture .definition-box { border-color: var(--pixel-orange); }
+.term-detail.scale .definition-box { border-color: var(--pixel-cyan); }
+.term-detail.perspective .definition-box { border-color: var(--pixel-purple); }
+.term-detail.color .definition-box { border-color: var(--pixel-pink); }
+
+/* BEFORE / AFTER TOGGLE */
+.ba-section { margin-bottom: 1.25rem; }
+.ba-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+.ba-toggle {
+  display: flex;
+  gap: 0;
+  margin-bottom: 0.75rem;
+  width: fit-content;
+  border: 2px solid var(--border-mid);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.ba-btn {
+  font-family: var(--font-pixel);
+  font-size: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1.8;
+  transition: all 0.15s;
+}
+.ba-btn.active { background: var(--border-mid); color: var(--text-strong); }
+.ba-frame {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  aspect-ratio: 16/9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.ba-placeholder {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+.ba-placeholder .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.ba-placeholder .slot-label {
+  font-family: var(--font-pixel);
+  font-size: 0.4rem;
+  line-height: 2;
+  color: var(--border-mid);
+}
+.ba-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: none;
+}
+.ba-img.loaded { display: block; }
+
+/* GALLERY */
+.gallery-section { margin-bottom: 0.5rem; }
+.gallery-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+.gallery-slot {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  position: relative;
+}
+.gallery-slot:hover { border-color: var(--border-mid); }
+.gallery-slot img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: none;
+  image-rendering: pixelated;
+}
+.gallery-slot img.loaded { display: block; }
+.gallery-slot-placeholder {
+  text-align: center;
+  color: var(--border-mid);
+  font-size: 0.7rem;
+}
+.gallery-slot-placeholder .slot-icon { font-size: 1.3rem; margin-bottom: 0.25rem; }
+.gallery-slot-placeholder .slot-num {
+  font-family: var(--font-pixel);
+  font-size: 0.38rem;
+  line-height: 2;
+}
+.gallery-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(1,46,64,0.85);
+  font-size: 0.65rem;
+  padding: 0.25rem 0.4rem;
+  color: var(--text-muted);
+  display: none;
+}
+.gallery-slot:hover .gallery-caption { display: block; }
+
+/* ── STUB TABS ── */
+.stub-message {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+.stub-icon { font-size: 3rem; margin-bottom: 1rem; }
+.stub-title {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+.stub-desc { font-size: 0.9rem; color: var(--text-muted); max-width: 420px; margin: 0 auto; }
+
+.coming-soon-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  max-width: 520px;
+  margin: 1.5rem auto 0;
+}
+.coming-card {
+  background: var(--bg-card);
+  border: 1px dashed var(--border-mid);
+  border-radius: 8px;
+  padding: 0.9rem;
+  text-align: center;
+}
+.coming-card-label {
+  font-family: var(--font-pixel);
+  font-size: 0.42rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+.coming-card-icon { font-size: 1.3rem; }
+
+/* ── TOOL CARDS ── */
+.tools-section-label {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 1.5rem 0 0.75rem 0;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.tools-section-label:first-child { margin-top: 0; }
+
+.tool-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 0.65rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.85rem;
+  align-items: start;
+  transition: border-color 0.15s;
+}
+.tool-card:hover { border-color: var(--border-mid); }
+.tool-card.primary { border-color: var(--pixel-cyan); }
+.tool-card.gif-win { border-left: 3px solid var(--pixel-yellow); }
+.tool-card.gif-mac { border-left: 3px solid var(--pixel-green); }
+.tool-card.gif-linux { border-left: 3px solid var(--pixel-purple); }
+.tool-card.pending { opacity: 0.6; border-style: dashed; }
+
+.tool-icon-col { font-size: 1.6rem; padding-top: 0.1rem; }
+
+.tool-info {}
+.tool-name {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  line-height: 1.8;
+  color: var(--text-strong);
+  margin-bottom: 0.2rem;
+}
+.tool-card.primary .tool-name { color: var(--pixel-cyan); }
+.tool-desc { font-size: 0.85rem; color: var(--text-body); line-height: 1.5; margin-bottom: 0.4rem; }
+.tool-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.tool-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-mid);
+  color: var(--text-muted);
+}
+.tool-tag.free { border-color: var(--pixel-green); color: var(--pixel-green); }
+.tool-tag.browser { border-color: var(--pixel-cyan); color: var(--pixel-cyan); }
+.tool-tag.win { border-color: var(--pixel-yellow); color: var(--pixel-yellow); }
+.tool-tag.mac { border-color: var(--pixel-orange); color: var(--pixel-orange); }
+.tool-tag.linux { border-color: var(--pixel-purple); color: var(--pixel-purple); }
+.tool-tag.pending { border-color: var(--border-mid); color: var(--text-muted); font-style: italic; }
+.tool-tag.source { border-color: var(--border-mid); color: var(--text-muted); }
+
+.tool-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; min-width: 110px; }
+.tool-link {
+  font-family: var(--font-pixel);
+  font-size: 0.4rem;
+  line-height: 1.8;
+  color: var(--pixel-cyan);
+  text-decoration: none;
+  background: rgba(91,188,214,0.08);
+  border: 1px solid rgba(91,188,214,0.3);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.tool-link:hover { background: rgba(91,188,214,0.15); border-color: var(--pixel-cyan); }
+.tool-link.disabled { color: var(--text-muted); background: none; border-color: var(--border-subtle); pointer-events: none; }
+.tool-prompt {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.4;
+  text-align: right;
+  max-width: 140px;
+}
+.tool-prompt strong { color: var(--pixel-yellow); font-style: normal; font-size: 0.65rem; display: block; margin-bottom: 0.15rem; }
+
+.platform-note {
+  background: var(--bg-surface);
+  border-left: 3px solid var(--border-mid);
+  border-radius: 0 6px 6px 0;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+.platform-note strong { color: var(--text-body); }
+
+.pending-note {
+  background: rgba(232,91,91,0.07);
+  border: 1px dashed var(--pixel-orange);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+.pending-note strong { color: var(--pixel-orange); }
+
+/* ── SCALE EXAMPLE ── */
+.scale-example-wrap { margin-bottom: 1rem; }
+.scale-toggle-row { display: flex; gap: 0; margin-bottom: 0.75rem; width: fit-content; }
+.scale-toggle-row .ba-btn { font-family: var(--font-pixel); font-size: 0.42rem; line-height: 1.8; }
+.scale-panels { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.scale-panel { flex: 1; min-width: 220px; }
+.scale-scene-wrap { position: relative; display: inline-block; background: #1a2433; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 8px; }
+.scale-scene-wrap canvas { image-rendering: pixelated; image-rendering: crisp-edges; display: block; }
+.sc-label-layer { position: absolute; top: 8px; left: 8px; pointer-events: none; }
+.sc-el-label { position: absolute; font-family: var(--font-body); font-size: 11px; font-weight: 700; color: #fff; background: rgba(0,0,0,0.72); padding: 1px 5px; border-radius: 3px; white-space: nowrap; display: none; }
+.sc-labels-on .sc-el-label { display: block; }
+.scale-panel-desc { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.5rem; line-height: 1.55; max-width: 252px; }
+.scale-notes { display: flex; gap: 1rem; flex-wrap: wrap; background: var(--bg-card); border-radius: 8px; padding: 1rem; border: 1px solid var(--border-subtle); }
+.scale-note-col { flex: 1; min-width: 180px; }
+.sc-note-item { display: flex; gap: 8px; margin-bottom: 0.6rem; align-items: flex-start; }
+.sc-dot { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; margin-top: 5px; }
+.sc-note-txt { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
+.sc-note-txt strong { color: var(--text-strong); }
+
+/* ── TEXTURE WIDGET ── */
+.tx-widget { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem; }
+.tx-pal-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 0.85rem; }
+.tx-sg { display: flex; align-items: center; gap: 5px; }
+.tx-sl { font-size: 0.78rem; color: var(--text-muted); }
+.tx-sw { width: 20px; height: 20px; border-radius: 4px; border: 1px solid var(--border-mid); cursor: pointer; display: inline-block; position: relative; flex-shrink: 0; }
+.tx-sw input[type=color] { opacity: 0; position: absolute; inset: 0; width: 100%; height: 100%; cursor: pointer; border: none; padding: 0; }
+.tx-main-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+.tx-col { flex: 1; min-width: 170px; }
+.tx-col-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+.tx-color-btns { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.tx-cb { font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-mid); cursor: pointer; background: none; color: var(--text-muted); transition: all 0.1s; }
+.tx-cb.on { font-weight: 700; }
+.tx-clear { font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle); cursor: pointer; background: none; color: var(--text-muted); margin-left: auto; }
+.tx-ref-note { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; margin-top: 5px; }
+.tx-save-btn { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; padding: 5px 12px; border-radius: 6px; border: 1px solid var(--pixel-orange); background: rgba(232,91,91,0.08); color: var(--pixel-orange); cursor: pointer; font-weight: 600; margin-top: 0.75rem; width: 100%; justify-content: center; }
+
+/* ── FOOTER ── */
+.context-footer {
+  background: rgba(1,46,64,0.8);
+  border-top: 1px solid var(--border-subtle);
+  padding: 0.6rem 2rem;
+  flex-shrink: 0;
+}
+.context-footer-inner { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.context-footer p { font-size: 0.7rem; color: var(--text-muted); margin: 0; }
+.footer-tag {
+  font-family: var(--font-pixel);
+  font-size: 0.38rem;
+  color: var(--pixel-purple);
+  line-height: 2;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .page-header { padding: 1rem 1rem 0 1rem; }
+  .site-title { font-size: 0.75rem; }
+  .tab-bar { padding: 0 0.5rem; }
+  .tab-btn { font-size: 0.4rem; padding: 0.5rem 0.6rem; }
+  .tab-panel { padding: 1rem 1rem 2rem 1rem; }
+  .nav-grid { grid-template-columns: 1fr; }
+  .term-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .coming-soon-grid { grid-template-columns: 1fr; }
+}
+
+/* ── WORK-SAMPLE PREVIEW SCOPE (added for portfolio sample only) ── */
+.sample-banner {
+  background: linear-gradient(135deg, rgba(232,91,91,0.15), rgba(151,132,217,0.08));
+  border-bottom: 2px solid var(--pixel-orange);
+  padding: 0.65rem 2rem;
+  flex-shrink: 0;
+  font-size: 0.82rem;
+  color: var(--text-strong);
+  line-height: 1.5;
+}
+.sample-banner-inner { max-width: 900px; margin: 0 auto; }
+.sample-banner strong { color: var(--pixel-orange); }
+.tab-btn.locked { opacity: 0.3; pointer-events: none; cursor: not-allowed; }
+.tab-btn.spotlight { animation: spotlightPulsePink 1.8s ease-in-out infinite; }
+@keyframes spotlightPulsePink {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(242,137,114,0.55); }
+  50% { box-shadow: 0 0 14px 4px rgba(242,137,114,0.55); }
+}
+.term-card.locked { opacity: 0.28; pointer-events: none; filter: grayscale(70%); }
+.term-card.spotlight { animation: spotlightPulseOrange 1.8s ease-in-out infinite; }
+@keyframes spotlightPulseOrange {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(232,91,91,0.55); }
+  50% { box-shadow: 0 0 14px 4px rgba(232,91,91,0.55); }
+}
+</style>
+</head>
+<body>
+
+<div class="sample-banner">
+  <div class="sample-banner-inner">
+    <strong>WORK SAMPLE PREVIEW</strong> — this is a live teaching tool in development for an upcoming Bitsy workshop series at a youth makerspace. This preview is scoped to the ART &rarr; TEXTURE module (highlighted below) to keep it focused. Design and Tools sections are part of the same working portal and are dimmed here, not missing from the real thing.
+  </div>
+</div>
+
+<div class="page-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="site-title">BITSY JAM</div>
+      <div class="site-subtitle">Class Resource Portal · Youth Makerspace</div>
+    </div>
+    <div class="session-badge">MAKERSPACE<br>· PILOT ·</div>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <div class="tab-bar-inner">
+    <button class="tab-btn active" data-tab="hub">Hub</button>
+    <button class="tab-btn art" data-tab="art">Art</button>
+    <button class="tab-btn design stub" data-tab="design">Design</button>
+    <button class="tab-btn tools stub" data-tab="tools">Tools</button>
+  </div>
+</div>
+
+<div class="tab-content-wrapper">
+
+  <!-- ══ HUB ══ -->
+  <div class="tab-panel active" id="tab-hub">
+    <div class="tab-panel-inner">
+
+      <div class="hub-intro">
+        <p>This is your reference for everything we cover in class. Pick a topic to go deeper, or use it to catch up on something you missed.</p>
+      </div>
+
+      <h2>WHAT'S IN HERE</h2>
+
+      <div class="nav-grid">
+        <div class="nav-card art" onclick="switchTab('art')">
+          <div class="nav-card-icon">🎨</div>
+          <div class="nav-card-title">ART</div>
+          <div class="nav-card-desc">Pixel art techniques for building worlds in Bitsy. Texture, scale, color, and how perspective works at 8×8.</div>
+        </div>
+        <div class="nav-card design" onclick="switchTab('design')">
+          <div class="nav-card-icon">✏️</div>
+          <div class="nav-card-title">DESIGN</div>
+          <div class="nav-card-desc">Game poetry, player point of view, and how small decisions change what a game means.</div>
+        </div>
+        <div class="nav-card tools" onclick="switchTab('tools')">
+          <div class="nav-card-icon">🛠️</div>
+          <div class="nav-card-title">TOOLS</div>
+          <div class="nav-card-desc">Bitsy tutorials, community games to play, and trusted places to learn more.</div>
+        </div>
+      </div>
+
+      <div class="qr-row">
+        <div class="qr-placeholder">📱</div>
+        <div class="qr-text">
+          <strong>Follow along on your phone</strong>
+          Scan to open this page on your own screen.
+          <div class="qr-url">[ QR code will go here — add URL before first session ]</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ ART ══ -->
+  <div class="tab-panel" id="tab-art">
+    <div class="tab-panel-inner">
+
+      <div class="hub-intro" style="border-color: var(--pixel-pink); background: linear-gradient(135deg, rgba(242,137,114,0.1), rgba(151,132,217,0.05));">
+        <p>Bitsy gives you an 8×8 grid and a three-color palette. Every choice you make inside those limits is a design decision. These four terms are how we talk about those choices.</p>
+      </div>
+
+      <h2>CLICK A TERM TO EXPLORE IT</h2>
+
+      <div class="term-grid">
+        <div class="term-card texture" id="card-texture" onclick="openTerm('texture')">
+          <div class="term-label">TEXTURE</div>
+          <div class="term-teaser">How patterns inside tiles make a surface feel rough, smooth, solid, or alive.</div>
+          <div class="term-cta">→ See examples</div>
+        </div>
+        <div class="term-card scale" id="card-scale" onclick="openTerm('scale')">
+          <div class="term-label">SCALE</div>
+          <div class="term-teaser">How size tells the player what matters — and what doesn't.</div>
+          <div class="term-cta">→ See examples</div>
+        </div>
+        <div class="term-card perspective" id="card-perspective" onclick="openTerm('perspective')">
+          <div class="term-label">IMPLIED PERSPECTIVE</div>
+          <div class="term-teaser">How a flat top-down grid can suggest depth, height, and distance.</div>
+          <div class="term-cta">→ See examples</div>
+        </div>
+        <div class="term-card color" id="card-color" onclick="openTerm('color')">
+          <div class="term-label">COLOR</div>
+          <div class="term-teaser">Three colors. How you use them changes the mood of the whole world.</div>
+          <div class="term-cta">→ See examples</div>
+        </div>
+      </div>
+
+      <!-- TEXTURE DETAIL -->
+      <div class="term-detail texture" id="detail-texture">
+        <div class="term-detail-header">
+          <div class="term-detail-title">TEXTURE</div>
+          <button class="close-btn" onclick="closeTerm('texture')">✕ CLOSE</button>
+        </div>
+
+        <div class="definition-box">
+          Texture is the pattern inside a tile. A flat tile filled with one color reads as a painted surface. The same tile with mortar lines, cracked edges, or varied pixels reads as stone. The pixel pattern carries the material — and the material is part of the story.
+        </div>
+
+        <!-- STONE EXAMPLE: two-panel -->
+        <div class="scale-example-wrap">
+          <div class="gallery-label" style="margin-bottom:0.75rem">Stone — flat vs. textured</div>
+          <div class="scale-panels">
+            <div class="scale-panel">
+              <div class="gallery-label" style="font-size:0.7rem">One tile, repeated</div>
+              <div class="scale-scene-wrap">
+                <canvas id="tx-flat" width="32" height="32" style="width:192px;height:192px"></canvas>
+              </div>
+              <div class="scale-panel-desc">Solid fill, tiled 4×4. Every cell is identical. The wall has no weight, no age, no material.</div>
+            </div>
+            <div class="scale-panel">
+              <div class="gallery-label" style="font-size:0.7rem">Two tile variants, alternated</div>
+              <div class="scale-scene-wrap">
+                <canvas id="tx-textured" width="32" height="32" style="width:192px;height:192px"></canvas>
+              </div>
+              <div class="scale-panel-desc">Two stone tiles with mortar lines and varied pixel weights, placed in a checkerboard. The repeat breaks — the wall reads as masonry.</div>
+            </div>
+          </div>
+
+          <div class="scale-notes">
+            <div class="scale-note-col">
+              <div class="gallery-label" style="margin-bottom:0.6rem">What makes the difference</div>
+              <div class="sc-note-item"><div class="sc-dot" style="background:#8a7a6a"></div><div class="sc-note-txt"><strong>Mortar lines.</strong> Dark pixels at tile edges suggest the gaps between stones. The grid becomes the material.</div></div>
+              <div class="sc-note-item"><div class="sc-dot" style="background:#b0a090"></div><div class="sc-note-txt"><strong>Pixel weight variation.</strong> Lighter and darker pixels within the tile suggest uneven surface. Flat fills have none of this.</div></div>
+              <div class="sc-note-item"><div class="sc-dot" style="background:#6a5a4a"></div><div class="sc-note-txt"><strong>Two variants, not one.</strong> A single textured tile repeated still reads as wallpaper. The second variant breaks the pattern.</div></div>
+            </div>
+            <div class="scale-note-col">
+              <div class="gallery-label" style="margin-bottom:0.6rem">The Bitsy constraint</div>
+              <div class="sc-note-txt" style="line-height:1.7">You only have three colors per room. Texture is how you make those three colors do more work.<br><br>A flat stone wall uses one color for the whole tile. A textured stone wall uses all three — background for mortar gaps, tile color for the stone face, highlight for edges catching light.<br><br>Same palette. Different arrangement. Different material.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INTERACTIVE WIDGET -->
+        <div class="gallery-label" style="margin:1.25rem 0 0.75rem">Try it out — draw your own tile</div>
+
+        <div class="tx-widget">
+          <div class="tx-pal-row">
+            <div class="tx-sg"><div class="tx-sl">Background</div><div class="tx-sw" id="txsw-bg" style="background:#2a2018"><input type="color" id="tx-col-bg" value="#2a2018" oninput="txSetPal()"></div></div>
+            <div class="tx-sg"><div class="tx-sl">Tile</div><div class="tx-sw" id="txsw-tile" style="background:#7a6a58"><input type="color" id="tx-col-tile" value="#7a6a58" oninput="txSetPal()"></div></div>
+            <div class="tx-sg"><div class="tx-sl">Highlight</div><div class="tx-sw" id="txsw-sp" style="background:#c0b098"><input type="color" id="tx-col-sp" value="#c0b098" oninput="txSetPal()"></div></div>
+            <button class="close-btn" onclick="txResetPal()" style="font-size:0.38rem">Reset</button>
+          </div>
+
+          <div class="tx-main-row">
+            <div class="tx-col">
+              <div class="tx-col-label">Draw — 8×8</div>
+              <div class="tx-color-btns" id="tx-cbgroup">
+                <button class="tx-cb on" data-c="0" onclick="txSetColor(0,this)">Background</button>
+                <button class="tx-cb" data-c="1" onclick="txSetColor(1,this)">Tile</button>
+                <button class="tx-cb" data-c="2" onclick="txSetColor(2,this)">Highlight</button>
+                <button class="tx-clear" onclick="txClear()">Clear</button>
+              </div>
+              <div class="scale-scene-wrap">
+                <canvas id="tx-draw" width="8" height="8" style="width:160px;height:160px;cursor:crosshair"></canvas>
+              </div>
+
+              <div class="tx-col-label" style="margin-top:0.75rem">Reference tiles</div>
+              <div class="ba-toggle" style="margin-bottom:0.5rem">
+                <button class="ba-btn active" id="txref-flat" onclick="txLoadRef('flat',this)">Flat</button>
+                <button class="ba-btn" id="txref-a" onclick="txLoadRef('a',this)">Stone A</button>
+                <button class="ba-btn" id="txref-b" onclick="txLoadRef('b',this)">Stone B</button>
+              </div>
+              <div class="scale-scene-wrap">
+                <canvas id="tx-ref" width="8" height="8" style="width:80px;height:80px"></canvas>
+              </div>
+              <div class="tx-ref-note" id="tx-ref-note">Flat fill — one color, no pattern.</div>
+            </div>
+
+            <div class="tx-col">
+              <div class="tx-col-label">4×4 tile repeat</div>
+              <div class="ba-toggle" style="margin-bottom:0.5rem">
+                <button class="ba-btn active" id="txrp-mine" onclick="txSetRepeat('mine',this)">Your tile</button>
+                <button class="ba-btn" id="txrp-alt" onclick="txSetRepeat('alt',this)">Stone A + B</button>
+              </div>
+              <div class="scale-scene-wrap">
+                <canvas id="tx-repeat" width="32" height="32" style="width:192px;height:192px"></canvas>
+              </div>
+              <div class="tx-ref-note" id="tx-repeat-note">Your drawn tile repeated. Does the pattern read as texture or wallpaper?</div>
+
+              <button class="tx-save-btn" onclick="txSave()">↓ Save as PNG — paste to Discord</button>
+              <div class="tx-ref-note" style="margin-top:4px">On mobile: save to camera roll, then attach in Discord.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-section" style="margin-top:1.25rem">
+          <div class="gallery-label">Examples from class</div>
+          <div class="gallery-grid">
+            <div class="gallery-slot">
+              <div class="gallery-slot-placeholder">
+                <div class="slot-icon">🧱</div>
+                <div class="slot-num">IMG 1</div>
+              </div>
+              <div class="gallery-caption">Stone wall variant</div>
+            </div>
+            <div class="gallery-slot">
+              <div class="gallery-slot-placeholder">
+                <div class="slot-icon">🌊</div>
+                <div class="slot-num">IMG 2</div>
+              </div>
+              <div class="gallery-caption">Rippled water tile</div>
+            </div>
+            <div class="gallery-slot">
+              <div class="gallery-slot-placeholder">
+                <div class="slot-icon">🌿</div>
+                <div class="slot-num">IMG 3</div>
+              </div>
+              <div class="gallery-caption">Grass with variation</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCALE DETAIL -->
+      <div class="term-detail scale" id="detail-scale">
+        <div class="term-detail-header">
+          <div class="term-detail-title">SCALE</div>
+          <button class="close-btn" onclick="closeTerm('scale')">✕ CLOSE</button>
+        </div>
+
+        <div class="definition-box">
+          Every Bitsy tile is 8×8 pixels — the grid never changes. But an element can claim one tile or many. A door that spans two tiles reads as something you walk through. A door that's the same size as the player reads as a wall mark. Scale is a compositional decision, not a drawing one. The player is the fixed reference point. Everything else is large or small relative to it.
+        </div>
+
+        <!-- TWO-PANEL SCALE EXAMPLE -->
+        <div class="scale-example-wrap">
+          <div class="scale-toggle-row">
+            <button class="ba-btn active" id="scale-lbl-on" onclick="setScaleLabels(true)">Labels on</button>
+            <button class="ba-btn" id="scale-lbl-off" onclick="setScaleLabels(false)">Labels off</button>
+          </div>
+
+          <div class="scale-panels">
+            <div class="scale-panel">
+              <div class="gallery-label">Every element one tile</div>
+              <div class="scale-scene-wrap" id="sc-wrap-flat">
+                <canvas id="sc-flat" width="96" height="80" style="width:252px;height:210px"></canvas>
+                <div class="sc-label-layer" id="sc-lbl-flat"></div>
+              </div>
+              <div class="scale-panel-desc">Door, window, player, and tree all occupy one tile. The room has objects but no sense of size or place.</div>
+            </div>
+            <div class="scale-panel">
+              <div class="gallery-label">Intentional scale</div>
+              <div class="scale-scene-wrap" id="sc-wrap-scale">
+                <canvas id="sc-scaled" width="96" height="80" style="width:252px;height:210px"></canvas>
+                <div class="sc-label-layer" id="sc-lbl-scale"></div>
+              </div>
+              <div class="scale-panel-desc">Same four elements. Tree spans six tiles, door two, window one. The player is small because the environment says so.</div>
+            </div>
+          </div>
+
+          <div class="scale-notes">
+            <div class="scale-note-col">
+              <div class="gallery-label" style="margin-bottom:0.6rem">What each relationship says</div>
+              <div class="sc-note-item"><div class="sc-dot" style="background:#7ec87e"></div><div class="sc-note-txt"><strong>Tree — 6 tiles.</strong> Larger than the player and the door. The player is inside an environment, not beside a prop.</div></div>
+              <div class="sc-note-item"><div class="sc-dot" style="background:#c8a060"></div><div class="sc-note-txt"><strong>Door — 2 tiles tall.</strong> Taller than the player. It reads as a passage. Same height as the player reads as a wall mark.</div></div>
+              <div class="sc-note-item"><div class="sc-dot" style="background:#6898c8"></div><div class="sc-note-txt"><strong>Window — 1 tile.</strong> Smaller than the door. The hierarchy signals building.</div></div>
+              <div class="sc-note-item"><div class="sc-dot" style="background:#c8d8f0"></div><div class="sc-note-txt"><strong>Player — 1 tile, always.</strong> The fixed reference. Everything else is measured against this.</div></div>
+            </div>
+            <div class="scale-note-col">
+              <div class="gallery-label" style="margin-bottom:0.6rem">The constraint this exposes</div>
+              <div class="sc-note-txt" style="line-height:1.7">A larger element is not a bigger tile — it is multiple tiles arranged to read as one thing. A two-tile door is two 8×8 drawings stacked. A six-tile tree is six drawings composed into canopy and trunk.<br><br>Scale is the first thing a player reads before dialogue, before sound, before anything else.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-section" style="margin-top:1.25rem">
+          <div class="gallery-label">Examples from class</div>
+          <div class="gallery-grid">
+            <div class="gallery-slot">
+              <div class="gallery-slot-placeholder">
+                <div class="slot-icon">🏔️</div>
+                <div class="slot-num">IMG 1</div>
+              </div>
+              <div class="gallery-caption">Mountain vs. player</div>
+            </div>
+            <div class="gallery-slot">
+              <div class="gallery-slot-placeholder">
+                <div class="slot-icon">🚪</div>
+                <div class="slot-num">IMG 2</div>
+              </div>
+              <div class="gallery-caption">Tight doorway</div>
+            </div>
+            <div class="gallery-slot">
+              <div class="gallery-slot-placeholder">
+                <div class="slot-icon">🌲</div>
+                <div class="slot-num">IMG 3</div>
+              </div>
+              <div class="gallery-caption">Small figure, tall forest</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IMPLIED PERSPECTIVE DETAIL -->
+      <div class="term-detail perspective" id="detail-perspective">
+        <div class="term-detail-header">
+          <div class="term-detail-title">IMPLIED PERSPECTIVE</div>
+          <button class="close-btn" onclick="closeTerm('perspective')">✕ CLOSE</button>
+        </div>
+
+        <div class="definition-box">
+          Bitsy is always top-down. But you can draw tiles that make the player feel like they're looking at something from the side, or up at something tall, or across a flat horizon. The camera doesn't change. Your drawings do. That's implied perspective — using pixel shapes to suggest a viewpoint the game can't actually show.
+        </div>
+
+        <div class="ba-section">
+          <div class="ba-label">Before / After</div>
+          <div class="ba-toggle">
+            <button class="ba-btn active" onclick="toggleBA('perspective', 'before', this)">BEFORE</button>
+            <button class="ba-btn" onclick="toggleBA('perspective', 'after', this)">AFTER</button>
+          </div>
+          <div class="ba-frame" id="ba-perspective">
+            <div class="ba-placeholder">
+              <div class="icon">🖼️</div>
+              <div class="slot-label">ADD BEFORE IMAGE<br>( flat / ambiguous viewpoint )</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-section">
+          <div class="gallery-label">Examples from class</div>
+          <div class="gallery-grid">
+            <div class="gallery-slot">
+              <div class="gallery-slot-placeholder">
+                <div class="slot-icon">🏛️</div>
+                <div class="slot-num">IMG 1</div>
+              </div>
+              <div class="gallery-caption">Building face-on</div>
+            </div>
+            <div class="gallery-slot">
+              <div class="gallery-slot-placeholder">
+                <div class="slot-icon">🌅</div>
+                <div class="slot-num">IMG 2</div>
+              </div>
+              <div class="gallery-caption">Horizon line in tiles</div>
+            </div>
+            <div class="gallery-slot">
+              <div class="gallery-slot-placeholder">
+                <div class="slot-icon">🕳️</div>
+                <div class="slot-num">IMG 3</div>
+              </div>
+              <div class="gallery-caption">Depth through layering</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLOR DETAIL -->
+      <div class="term-detail color" id="detail-color">
+        <div class="term-detail-header">
+          <div class="term-detail-title">COLOR</div>
+          <button class="close-btn" onclick="closeTerm('color')">✕ CLOSE</button>
+        </div>
+
+        <div class="definition-box">
+          Bitsy gives you exactly three colors for each room: background, tiles, and sprites. That's the whole palette. Changing those three colors changes the feeling of the entire world — the same map drawn in warm yellows feels different from the same map in cold blues. Color is mood. It's also the first thing a player notices.
+        </div>
+
+        <div class="ba-section">
+          <div class="ba-label">Before / After</div>
+          <div class="ba-toggle">
+            <button class="ba-btn active" onclick="toggleBA('color', 'before', this)">BEFORE</button>
+            <button class="ba-btn" onclick="toggleBA('color', 'after', this)">AFTER</button>
+          </div>
+          <div class="ba-frame" id="ba-color">
+            <div class="ba-placeholder">
+              <div class="icon">🖼️</div>
+              <div class="slot-label">ADD BEFORE IMAGE<br>( same room, different palette )</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-section">
+          <div class="gallery-label">Examples from class</div>
+          <div class="gallery-grid">
+            <div class="gallery-slot">
+              <div class="gallery-slot-placeholder">
+                <div class="slot-icon">🌡️</div>
+                <div class="slot-num">IMG 1</div>
+              </div>
+              <div class="gallery-caption">Warm vs. cold palette</div>
+            </div>
+            <div class="gallery-slot">
+              <div class="gallery-slot-placeholder">
+                <div class="slot-icon">🌙</div>
+                <div class="slot-num">IMG 2</div>
+              </div>
+              <div class="gallery-caption">Night vs. day</div>
+            </div>
+            <div class="gallery-slot">
+              <div class="gallery-slot-placeholder">
+                <div class="slot-icon">🎨</div>
+                <div class="slot-num">IMG 3</div>
+              </div>
+              <div class="gallery-caption">Monochrome for mood</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ DESIGN (stub) ══ -->
+  <div class="tab-panel" id="tab-design">
+    <div class="tab-panel-inner">
+      <div class="stub-message">
+        <div class="stub-icon">✏️</div>
+        <div class="stub-title">DESIGN — COMING SOON</div>
+        <div class="stub-desc">This section is being built as the course runs. Check back after we cover these topics in class.</div>
+        <div class="coming-soon-grid">
+          <div class="coming-card">
+            <div class="coming-card-icon">📜</div>
+            <div class="coming-card-label">GAME POETRY</div>
+          </div>
+          <div class="coming-card">
+            <div class="coming-card-icon">👤</div>
+            <div class="coming-card-label">POINT OF VIEW</div>
+          </div>
+          <div class="coming-card">
+            <div class="coming-card-icon">🔀</div>
+            <div class="coming-card-label">PLAYER AGENCY</div>
+          </div>
+          <div class="coming-card">
+            <div class="coming-card-icon">💬</div>
+            <div class="coming-card-label">DIALOGUE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TOOLS ══ -->
+  <div class="tab-panel" id="tab-tools">
+    <div class="tab-panel-inner">
+
+      <!-- MAKE -->
+      <div class="tools-section-label">MAKE YOUR GAME</div>
+
+      <div class="tool-card primary">
+        <div class="tool-icon-col">🎮</div>
+        <div class="tool-info">
+          <div class="tool-name">BITSY</div>
+          <div class="tool-desc">The tool we use in class. Runs in your browser — no download, no account. Make a room, draw tiles, add a character, write dialogue.</div>
+          <div class="tool-tags">
+            <span class="tool-tag free">free</span>
+            <span class="tool-tag browser">browser</span>
+            <span class="tool-tag source">source-available</span>
+          </div>
+        </div>
+        <div class="tool-right">
+          <a class="tool-link" href="https://make.bitsy.org" target="_blank" rel="noopener">OPEN BITSY →</a>
+        </div>
+      </div>
+
+      <!-- DIAGRAM -->
+      <div class="tools-section-label">PLAN AND DIAGRAM</div>
+
+      <div class="tool-card">
+        <div class="tool-icon-col">✏️</div>
+        <div class="tool-info">
+          <div class="tool-name">EXCALIDRAW</div>
+          <div class="tool-desc">We used this in class to map out how a game branches. Good for sketching any kind of flow before you build it. Nothing saves to a server unless you choose to share it.</div>
+          <div class="tool-tags">
+            <span class="tool-tag free">free</span>
+            <span class="tool-tag browser">browser</span>
+            <span class="tool-tag source">open source</span>
+          </div>
+        </div>
+        <div class="tool-right">
+          <a class="tool-link" href="https://excalidraw.com" target="_blank" rel="noopener">OPEN →</a>
+          <div class="tool-prompt"><strong>Used in class for:</strong> mapping branching dialogue and player choices before building in Bitsy</div>
+        </div>
+      </div>
+
+      <!-- CAPTURE -->
+      <div class="tools-section-label">CAPTURE YOUR GAME AS A GIF</div>
+
+      <div class="platform-note">
+        GIF tools are platform-specific. Find yours below. If you're not sure which you have: Windows has a Start menu, Mac has a Dock, Linux is everything else.
+      </div>
+
+      <div class="tool-card gif-win">
+        <div class="tool-icon-col">🪟</div>
+        <div class="tool-info">
+          <div class="tool-name">SCREENTOGIF</div>
+          <div class="tool-desc">Records a selected area of your screen and exports it as a GIF. Simple, no subscription, no watermark. <strong>Windows only.</strong> Requires a download and install — do this at home, not during class.</div>
+          <div class="tool-tags">
+            <span class="tool-tag free">free</span>
+            <span class="tool-tag win">windows</span>
+            <span class="tool-tag source">open source</span>
+          </div>
+        </div>
+        <div class="tool-right">
+          <a class="tool-link" href="https://www.screentogif.com" target="_blank" rel="noopener">DOWNLOAD →</a>
+          <div class="tool-prompt"><strong>Used by:</strong> your teacher to capture Bitsy examples for this portal</div>
+        </div>
+      </div>
+
+      <div class="tool-card gif-mac">
+        <div class="tool-icon-col">🍎</div>
+        <div class="tool-info">
+          <div class="tool-name">GIFSKI</div>
+          <div class="tool-desc">High-quality GIF export for Mac. Drag in a video or screen recording and it converts it. Produces smaller, sharper GIFs than most alternatives. <strong>Mac only.</strong></div>
+          <div class="tool-tags">
+            <span class="tool-tag free">free</span>
+            <span class="tool-tag mac">mac</span>
+            <span class="tool-tag source">open source</span>
+          </div>
+        </div>
+        <div class="tool-right">
+          <a class="tool-link" href="https://gif.ski" target="_blank" rel="noopener">DOWNLOAD →</a>
+        </div>
+      </div>
+
+      <div class="tool-card gif-linux">
+        <div class="tool-icon-col">🐧</div>
+        <div class="tool-info">
+          <div class="tool-name">PEEK</div>
+          <div class="tool-desc">Screen recorder that exports directly to GIF or WebM. Simple window overlay, one-click record. <strong>Linux only.</strong></div>
+          <div class="tool-tags">
+            <span class="tool-tag free">free</span>
+            <span class="tool-tag linux">linux</span>
+            <span class="tool-tag source">open source</span>
+          </div>
+        </div>
+        <div class="tool-right">
+          <a class="tool-link" href="https://github.com/phw/peek" target="_blank" rel="noopener">GITHUB →</a>
+        </div>
+      </div>
+
+      <!-- PUBLISH -->
+      <div class="tools-section-label">PUBLISH YOUR GAME</div>
+
+      <div class="pending-note">
+        <strong>Note from your teacher:</strong> The publishing section is being reviewed before it goes live here. Itch.io is where we'll publish class games, and I'll confirm the right link and setup with the makerspace team first. Ask in class if you want to publish now.
+      </div>
+
+      <div class="tool-card pending">
+        <div class="tool-icon-col">📤</div>
+        <div class="tool-info">
+          <div class="tool-name">ITCH.IO — CLASS ACCOUNT</div>
+          <div class="tool-desc">The class account where finished Bitsy games get published. Each game gets its own page with a real URL you can share.</div>
+          <div class="tool-tags">
+            <span class="tool-tag free">free</span>
+            <span class="tool-tag browser">browser</span>
+            <span class="tool-tag pending">link coming soon</span>
+          </div>
+        </div>
+        <div class="tool-right">
+          <a class="tool-link disabled" href="#" onclick="return false;">COMING SOON</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- end tab-content-wrapper -->
+
+<div class="context-footer">
+  <div class="context-footer-inner">
+    <p class="footer-tag">BITSY JAM · YOUTH MAKERSPACE</p>
+    <p style="font-size:0.7rem; color: var(--text-muted);">make.bitsy.org · itch.io</p>
+  </div>
+</div>
+
+<script>
+// ── TAB SWITCHING ──
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  const btn = document.querySelector(`[data-tab="${tabId}"]`);
+  const panel = document.getElementById('tab-' + tabId);
+  if (btn) btn.classList.add('active');
+  if (panel) panel.classList.add('active');
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+  btn.addEventListener('keydown', e => {
+    const btns = Array.from(document.querySelectorAll('.tab-btn'));
+    const idx = btns.indexOf(btn);
+    let target = null;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); target = btns[(idx + 1) % btns.length]; }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); target = btns[(idx - 1 + btns.length) % btns.length]; }
+    else if (e.key === 'Home') { e.preventDefault(); target = btns[0]; }
+    else if (e.key === 'End') { e.preventDefault(); target = btns[btns.length - 1]; }
+    if (target) { target.focus(); target.click(); }
+  });
+});
+
+// ── TERM DETAIL OPEN/CLOSE ──
+const termNames = ['texture', 'scale', 'perspective', 'color'];
+let openTerm_current = null;
+
+function openTerm(name) {
+  // Close any open term
+  if (openTerm_current && openTerm_current !== name) {
+    closeTerm(openTerm_current);
+  }
+  // If already open, close it (toggle)
+  if (openTerm_current === name) {
+    closeTerm(name);
+    return;
+  }
+
+  const card = document.getElementById('card-' + name);
+  const detail = document.getElementById('detail-' + name);
+  if (card) card.classList.add('active');
+  if (detail) {
+    detail.classList.add('visible');
+    // Scroll detail into view smoothly
+    setTimeout(() => detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  }
+  openTerm_current = name;
+}
+
+function closeTerm(name) {
+  const card = document.getElementById('card-' + name);
+  const detail = document.getElementById('detail-' + name);
+  if (card) card.classList.remove('active');
+  if (detail) detail.classList.remove('visible');
+  if (openTerm_current === name) openTerm_current = null;
+}
+
+// ── BEFORE / AFTER TOGGLE ──
+// Stores which state each term is in, and the image URLs if set
+const baState = {};
+
+function toggleBA(term, state, btn) {
+  baState[term] = state;
+  const frame = document.getElementById('ba-' + term);
+
+  // Update button active states
+  const btns = btn.parentElement.querySelectorAll('.ba-btn');
+  btns.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // If images are set, swap them; otherwise swap placeholder text
+  const beforeSrc = frame.dataset.before || '';
+  const afterSrc = frame.dataset.after || '';
+  const img = frame.querySelector('img');
+  const placeholder = frame.querySelector('.ba-placeholder');
+
+  if (state === 'before' && beforeSrc) {
+    if (img) { img.src = beforeSrc; img.classList.add('loaded'); }
+    if (placeholder) placeholder.style.display = 'none';
+  } else if (state === 'after' && afterSrc) {
+    if (img) { img.src = afterSrc; img.classList.add('loaded'); }
+    if (placeholder) placeholder.style.display = 'none';
+  } else {
+    // No image set — update placeholder label
+    if (placeholder) {
+      const label = placeholder.querySelector('.slot-label');
+      if (label) {
+        const labels = {
+          texture:  { before: 'ADD BEFORE IMAGE\n( flat / no texture )', after: 'ADD AFTER IMAGE\n( tile with texture )' },
+          scale:    { before: 'ADD BEFORE IMAGE\n( same size / no sense of scale )', after: 'ADD AFTER IMAGE\n( scale contrast added )' },
+          perspective: { before: 'ADD BEFORE IMAGE\n( flat / ambiguous viewpoint )', after: 'ADD AFTER IMAGE\n( perspective implied )' },
+          color:    { before: 'ADD BEFORE IMAGE\n( same room, different palette )', after: 'ADD AFTER IMAGE\n( mood shifted by color )' }
+        };
+        label.textContent = (labels[term] && labels[term][state]) || '';
+      }
+    }
+  }
+}
+
+// ── IMAGE INJECTION HELPER ──
+// Call this from the console or build a small admin UI later:
+// setBAImage('texture', 'before', 'path/to/image.png')
+// setBAImage('texture', 'after', 'path/to/image.png')
+// setGalleryImage('texture', 0, 'path/to/image.png', 'Caption text')
+function setBAImage(term, state, src) {
+  const frame = document.getElementById('ba-' + term);
+  if (!frame) return;
+  frame.dataset[state] = src;
+  let img = frame.querySelector('img');
+  if (!img) {
+    img = document.createElement('img');
+    img.alt = term + ' ' + state;
+    frame.appendChild(img);
+  }
+  const placeholder = frame.querySelector('.ba-placeholder');
+  if ((baState[term] || 'before') === state) {
+    img.src = src;
+    img.classList.add('loaded');
+    if (placeholder) placeholder.style.display = 'none';
+  }
+}
+
+// ── TEXTURE EXAMPLE + WIDGET ──
+(function(){
+  // Stone tile pixel data — 0=bg, 1=tile, 2=highlight
+  const STONE_FLAT = [
+    [1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],
+  ];
+  const STONE_A = [
+    [0,0,0,0,0,0,0,0],
+    [0,2,2,1,1,2,1,0],
+    [0,1,1,1,1,1,1,0],
+    [0,1,1,1,1,1,2,0],
+    [0,0,0,0,0,0,0,0],
+    [0,2,1,1,2,1,1,0],
+    [0,1,1,1,1,1,1,0],
+    [0,1,1,2,1,1,1,0],
+  ];
+  const STONE_B = [
+    [0,0,0,0,0,0,0,0],
+    [0,1,2,1,1,1,2,0],
+    [0,1,1,1,2,1,1,0],
+    [0,2,1,1,1,1,1,0],
+    [0,0,0,0,0,0,0,0],
+    [0,1,1,2,1,1,1,0],
+    [0,1,1,1,1,2,1,0],
+    [0,2,1,1,1,1,1,0],
+  ];
+
+  let txPal = { bg:'#2a2018', tile:'#7a6a58', sp:'#c0b098' };
+  let txDrawColor = 0;
+  let txRepeatMode = 'mine';
+  let txRefMode = 'flat';
+  let txUserGrid = STONE_FLAT.map(r=>[...r]);
+  let txPainting = false;
+
+  function txColors(){ return [txPal.bg, txPal.tile, txPal.sp]; }
+
+  function txDrawTile(ctx, grid, ox, oy){
+    const c = txColors();
+    for(let r=0;r<8;r++) for(let col=0;col<8;col++){
+      ctx.fillStyle = c[grid[r][col]];
+      ctx.fillRect(ox+col, oy+r, 1, 1);
+    }
+  }
+
+  // Static example canvases
+  function renderTxExample(){
+    const cvF = document.getElementById('tx-flat');
+    const cvT = document.getElementById('tx-textured');
+    if(!cvF || !cvT) return;
+    const cF = cvF.getContext('2d'); cF.imageSmoothingEnabled=false;
+    const cT = cvT.getContext('2d'); cT.imageSmoothingEnabled=false;
+    const EP = {bg:'#2a2018', tile:'#7a6a58', sp:'#c0b098'};
+    function ep(ctx,grid,ox,oy){
+      const c=[EP.bg,EP.tile,EP.sp];
+      for(let r=0;r<8;r++) for(let col=0;col<8;col++){ ctx.fillStyle=c[grid[r][col]]; ctx.fillRect(ox+col,oy+r,1,1); }
+    }
+    // Flat: 4×4 repeat of STONE_FLAT
+    for(let r=0;r<4;r++) for(let col=0;col<4;col++) ep(cF,STONE_FLAT,col*8,r*8);
+    // Textured: checkerboard of A and B
+    for(let r=0;r<4;r++) for(let col=0;col<4;col++) ep(cT,((r+col)%2===0)?STONE_A:STONE_B,col*8,r*8);
+  }
+
+  // Widget rendering
+  function txRenderDraw(){
+    const cv = document.getElementById('tx-draw'); if(!cv) return;
+    const ctx = cv.getContext('2d'); ctx.imageSmoothingEnabled=false;
+    txDrawTile(ctx, txUserGrid, 0, 0);
+    txUpdateColorBtns();
+  }
+  function txRenderRef(){
+    const cv = document.getElementById('tx-ref'); if(!cv) return;
+    const ctx = cv.getContext('2d'); ctx.imageSmoothingEnabled=false;
+    const g = txRefMode==='flat'?STONE_FLAT:txRefMode==='a'?STONE_A:STONE_B;
+    txDrawTile(ctx, g, 0, 0);
+  }
+  function txRenderRepeat(){
+    const cv = document.getElementById('tx-repeat'); if(!cv) return;
+    const ctx = cv.getContext('2d'); ctx.imageSmoothingEnabled=false;
+    for(let r=0;r<4;r++) for(let col=0;col<4;col++){
+      const g = txRepeatMode==='mine' ? txUserGrid : ((r+col)%2===0?STONE_A:STONE_B);
+      txDrawTile(ctx, g, col*8, r*8);
+    }
+  }
+  function txRenderAll(){ txRenderDraw(); txRenderRef(); txRenderRepeat(); }
+
+  function txUpdateColorBtns(){
+    const c = txColors();
+    document.querySelectorAll('#tx-cbgroup .tx-cb').forEach(b=>{
+      const idx = parseInt(b.dataset.c);
+      b.style.background = c[idx];
+      b.style.color = idx===0 ? txPal.sp : txPal.bg;
+      b.style.borderColor = c[idx];
+    });
+  }
+
+  window.txSetColor = function(i, btn){
+    txDrawColor = i;
+    document.querySelectorAll('#tx-cbgroup .tx-cb').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+  };
+  window.txClear = function(){
+    txUserGrid = Array.from({length:8},()=>Array(8).fill(0));
+    txRenderAll();
+  };
+  window.txLoadRef = function(m, btn){
+    txRefMode = m;
+    document.querySelectorAll('#txref-flat,#txref-a,#txref-b').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const notes = {flat:'Flat fill — one color, no pattern.',a:'Stone A — mortar lines and pixel weight variation.',b:'Stone B — second variant; alternate with A to break the repeat.'};
+    const n = document.getElementById('tx-ref-note'); if(n) n.textContent = notes[m];
+    txRenderRef();
+  };
+  window.txSetRepeat = function(m, btn){
+    txRepeatMode = m;
+    document.getElementById('txrp-mine').classList.toggle('active', m==='mine');
+    document.getElementById('txrp-alt').classList.toggle('active', m==='alt');
+    const n = document.getElementById('tx-repeat-note');
+    if(n) n.textContent = m==='mine'
+      ? 'Your drawn tile repeated. Does the pattern read as texture or wallpaper?'
+      : 'Stone A and B alternated. Two variants, one grid — this is how Bitsy texture works.';
+    txRenderRepeat();
+  };
+  window.txSetPal = function(){
+    txPal.bg   = document.getElementById('tx-col-bg').value;
+    txPal.tile = document.getElementById('tx-col-tile').value;
+    txPal.sp   = document.getElementById('tx-col-sp').value;
+    document.getElementById('txsw-bg').style.background   = txPal.bg;
+    document.getElementById('txsw-tile').style.background = txPal.tile;
+    document.getElementById('txsw-sp').style.background   = txPal.sp;
+    txRenderAll();
+  };
+  window.txResetPal = function(){
+    txPal = {bg:'#2a2018',tile:'#7a6a58',sp:'#c0b098'};
+    document.getElementById('tx-col-bg').value   = txPal.bg;
+    document.getElementById('tx-col-tile').value = txPal.tile;
+    document.getElementById('tx-col-sp').value   = txPal.sp;
+    document.getElementById('txsw-bg').style.background   = txPal.bg;
+    document.getElementById('txsw-tile').style.background = txPal.tile;
+    document.getElementById('txsw-sp').style.background   = txPal.sp;
+    txRenderAll();
+  };
+
+  function txGetPixel(e, cv, W){
+    const rect = cv.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return [
+      Math.floor((clientX-rect.left)/(rect.width/W)),
+      Math.floor((clientY-rect.top)/(rect.height/W))
+    ];
+  }
+  function txPaint(e){
+    const cv = document.getElementById('tx-draw'); if(!cv) return;
+    const [x,y] = txGetPixel(e, cv, 8);
+    if(x<0||x>7||y<0||y>7) return;
+    txUserGrid[y][x] = txDrawColor;
+    txRenderDraw();
+    if(txRepeatMode==='mine') txRenderRepeat();
+  }
+
+  function txBindEvents(){
+    const cv = document.getElementById('tx-draw'); if(!cv) return;
+    cv.addEventListener('mousedown', e=>{ txPainting=true; txPaint(e); });
+    cv.addEventListener('mousemove', e=>{ if(txPainting) txPaint(e); });
+    cv.addEventListener('mouseup',   ()=>txPainting=false);
+    cv.addEventListener('mouseleave',()=>txPainting=false);
+    cv.addEventListener('touchstart', e=>{ e.preventDefault(); txPainting=true; txPaint(e); },{passive:false});
+    cv.addEventListener('touchmove',  e=>{ e.preventDefault(); if(txPainting) txPaint(e); },{passive:false});
+    cv.addEventListener('touchend',   ()=>txPainting=false);
+  }
+
+  window.txSave = function(){
+    const SCALE=20, PAD=10, LBL=16, GAP=12;
+    const tW=8*SCALE, rW=32*SCALE;
+    const W = tW+GAP+rW+PAD*2;
+    const H = Math.max(tW, rW)+PAD*2+LBL;
+    const out = document.createElement('canvas');
+    out.width=W; out.height=H;
+    const ctx = out.getContext('2d'); ctx.imageSmoothingEnabled=false;
+    ctx.fillStyle='#181818'; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#888'; ctx.font='11px monospace';
+    ctx.fillText('Your tile', PAD, PAD+LBL-4);
+    ctx.fillText('4×4 repeat', PAD+tW+GAP, PAD+LBL-4);
+    ctx.drawImage(document.getElementById('tx-draw'),   PAD,        PAD+LBL, tW, tW);
+    ctx.drawImage(document.getElementById('tx-repeat'), PAD+tW+GAP, PAD+LBL, rW, rW);
+    out.toBlob(blob=>{
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a'); a.href=url; a.download='bitsy-texture.png';
+      document.body.appendChild(a); a.click();
+      setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 1000);
+    });
+  };
+
+  // Render on term open
+  const origOpenTx = window.openTerm;
+  window.openTerm = function(name){
+    origOpenTx(name);
+    if(name==='texture'){
+      setTimeout(()=>{ renderTxExample(); txRenderAll(); txBindEvents(); }, 50);
+    }
+  };
+})();
+
+// ── SCALE EXAMPLE RENDERING ──
+(function(){
+  const BG='#1a2433',TILE='#4a6fa5',SP='#c8d8f0';
+  const GRN='#5aaa5a',GLHT='#90d890',GDRK='#2a6a2a';
+  const DOOR='#c8a060',DLHT='#f0d090',DDRK='#886030';
+  const WIN='#5080b0',WLHT='#90b8e0',WFILL='#c8e0f8';
+  const WALL='#3a5a80';
+  let scaleLabels = true;
+
+  function r(ctx,x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);}
+
+  function drawFlatTree(ctx,ox,oy){r(ctx,ox+2,oy,4,1,GRN);r(ctx,ox+1,oy+1,6,4,GRN);r(ctx,ox+2,oy+5,4,1,GRN);r(ctx,ox+3,oy+6,2,1,GDRK);r(ctx,ox+3,oy+7,2,1,GDRK);r(ctx,ox+2,oy+2,1,1,GLHT);r(ctx,ox+5,oy+3,1,1,GLHT);}
+  function drawFlatDoor(ctx,ox,oy){r(ctx,ox+1,oy,6,1,DOOR);r(ctx,ox,oy+1,8,6,DOOR);r(ctx,ox,oy+7,8,1,DDRK);r(ctx,ox+2,oy+2,4,4,BG);r(ctx,ox+5,oy+4,1,1,DLHT);r(ctx,ox+1,oy+1,1,1,DLHT);r(ctx,ox+6,oy+1,1,1,DLHT);}
+  function drawFlatWindow(ctx,ox,oy){r(ctx,ox,oy,8,8,WALL);r(ctx,ox+1,oy+1,3,3,WFILL);r(ctx,ox+4,oy+1,3,3,WFILL);r(ctx,ox+1,oy+4,3,3,WFILL);r(ctx,ox+4,oy+4,3,3,WFILL);r(ctx,ox,oy+3,8,2,WALL);r(ctx,ox+3,oy,2,8,WALL);r(ctx,ox+1,oy+1,1,1,WLHT);r(ctx,ox+4,oy+1,1,1,WLHT);}
+  function drawFlatPlayer(ctx,ox,oy){r(ctx,ox+3,oy,2,2,SP);r(ctx,ox+2,oy+2,4,3,SP);r(ctx,ox+1,oy+5,2,2,SP);r(ctx,ox+4,oy+5,2,2,SP);r(ctx,ox+3,oy+1,1,1,TILE);r(ctx,ox+4,oy+1,1,1,TILE);}
+
+  function drawFlatScene(ctx){
+    r(ctx,0,0,96,80,BG);
+    for(let tx=0;tx<12;tx++)for(let ty=0;ty<10;ty++){if((tx+ty)%2===0)r(ctx,tx*8,ty*8,8,8,'#1e2a3a');}
+    drawFlatTree(ctx,8,32);drawFlatDoor(ctx,28,32);drawFlatWindow(ctx,52,32);drawFlatPlayer(ctx,72,32);
+  }
+
+  function drawScaledTree(ctx,ox,oy){r(ctx,ox+4,oy,16,2,GRN);r(ctx,ox+2,oy+2,20,6,GRN);r(ctx,ox,oy+8,24,8,GRN);r(ctx,ox+2,oy+16,20,4,GRN);[[ox+5,oy+1],[ox+12,oy+4],[ox+18,oy+6],[ox+3,oy+10],[ox+15,oy+12],[ox+8,oy+17]].forEach(([x,y])=>r(ctx,x,y,2,1,GLHT));r(ctx,ox+8,oy+20,8,16,GDRK);r(ctx,ox+10,oy+20,4,16,GRN);}
+  function drawScaledDoor(ctx,ox,oy){r(ctx,ox,oy,8,16,DOOR);r(ctx,ox,oy,8,2,DLHT);r(ctx,ox,oy+16,8,2,DDRK);r(ctx,ox+1,oy+3,6,11,BG);r(ctx,ox+5,oy+10,1,2,DLHT);}
+  function drawScaledWindow(ctx,ox,oy){r(ctx,ox,oy,8,8,WALL);r(ctx,ox+1,oy+1,3,3,WFILL);r(ctx,ox+4,oy+1,3,3,WFILL);r(ctx,ox+1,oy+4,3,3,WFILL);r(ctx,ox+4,oy+4,3,3,WFILL);r(ctx,ox,oy+3,8,2,WALL);r(ctx,ox+3,oy,2,8,WALL);r(ctx,ox+1,oy+1,1,1,WLHT);}
+  function drawScaledPlayer(ctx,ox,oy){r(ctx,ox+3,oy,2,2,SP);r(ctx,ox+2,oy+2,4,3,SP);r(ctx,ox+1,oy+5,2,3,SP);r(ctx,ox+4,oy+5,2,3,SP);r(ctx,ox+3,oy+1,1,1,TILE);r(ctx,ox+4,oy+1,1,1,TILE);}
+
+  function drawScaledScene(ctx){
+    r(ctx,0,0,96,80,BG);
+    for(let tx=0;tx<12;tx++)for(let ty=0;ty<10;ty++){if((tx+ty)%2===0)r(ctx,tx*8,ty*8,8,8,'#1e2a3a');}
+    r(ctx,48,8,48,56,WALL);
+    drawScaledTree(ctx,4,8);drawScaledDoor(ctx,56,24);drawScaledWindow(ctx,72,18);drawScaledPlayer(ctx,60,56);
+  }
+
+  function buildScaleLabels(containerId, items, cssW, canvasW) {
+    const container = document.getElementById(containerId);
+    if(!container) return;
+    container.innerHTML = '';
+    const S = cssW / canvasW;
+    items.forEach(([text,cx,cy])=>{
+      const el = document.createElement('div');
+      el.className = 'sc-el-label';
+      el.textContent = text;
+      el.style.left = (cx*S)+'px';
+      el.style.top  = (cy*S)+'px';
+      container.appendChild(el);
+    });
+  }
+
+  window.setScaleLabels = function(on) {
+    scaleLabels = on;
+    document.getElementById('scale-lbl-on').classList.toggle('active', on);
+    document.getElementById('scale-lbl-off').classList.toggle('active', !on);
+    ['sc-wrap-flat','sc-wrap-scale'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.classList.toggle('sc-labels-on', on);
+    });
+  };
+
+  function renderScaleExample() {
+    const cvF = document.getElementById('sc-flat');
+    const cvS = document.getElementById('sc-scaled');
+    if(!cvF || !cvS) return;
+    cvF.getContext('2d').imageSmoothingEnabled = false;
+    cvS.getContext('2d').imageSmoothingEnabled = false;
+    drawFlatScene(cvF.getContext('2d'));
+    drawScaledScene(cvS.getContext('2d'));
+    buildScaleLabels('sc-lbl-flat',  [['tree',8,24],['door',28,24],['window',50,24],['player',70,24]], 252, 96);
+    buildScaleLabels('sc-lbl-scale', [['tree',4,4],['door',56,20],['window',72,14],['player',58,52]], 252, 96);
+    ['sc-wrap-flat','sc-wrap-scale'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.classList.toggle('sc-labels-on', scaleLabels);
+    });
+  }
+
+  // Render once the term detail becomes visible
+  const origOpen = window.openTerm;
+  window.openTerm = function(name) {
+    origOpen(name);
+    if(name === 'scale') setTimeout(renderScaleExample, 50);
+  };
+})();
+
+function setGalleryImage(term, index, src, caption) {
+  const detail = document.getElementById('detail-' + term);
+  if (!detail) return;
+  const slots = detail.querySelectorAll('.gallery-slot');
+  const slot = slots[index];
+  if (!slot) return;
+  let img = slot.querySelector('img');
+  if (!img) {
+    img = document.createElement('img');
+    img.alt = caption || '';
+    img.style.imageRendering = 'pixelated';
+    slot.insertBefore(img, slot.firstChild);
+  }
+  img.src = src;
+  img.classList.add('loaded');
+  const placeholder = slot.querySelector('.gallery-slot-placeholder');
+  if (placeholder) placeholder.style.display = 'none';
+  const cap = slot.querySelector('.gallery-caption');
+  if (cap && caption) cap.textContent = caption;
+}
+
+// ── WORK-SAMPLE PREVIEW SCOPE (added for portfolio sample only) ──
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  if (btn.dataset.tab === 'art') {
+    btn.classList.add('spotlight');
+  } else {
+    btn.classList.add('locked');
+  }
+});
+['scale', 'perspective', 'color'].forEach(name => {
+  const card = document.getElementById('card-' + name);
+  if (card) card.classList.add('locked');
+});
+const textureCardEl = document.getElementById('card-texture');
+if (textureCardEl) textureCardEl.classList.add('spotlight');
+
+switchTab('art');
+setTimeout(() => openTerm('texture'), 200);
+</script>
+
+</body>
+</html>
