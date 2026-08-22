@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ordliste — Bitsy Jam</title>
+<meta name="description" content="The words we use, in English and Danish, collected as the course runs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/portal.css">
+</head>
+<body>
+<a class="skip-link" href="#collected">Skip to the words</a>
+
+<div class="shell">
+
+  <header class="masthead">
+    <div class="masthead__titles">
+      <span class="eyebrow">Ordliste</span>
+      <h1>The words we use</h1>
+    </div>
+    <div class="lang">
+      <button type="button" class="lang__btn" data-lang-toggle data-i18n-aria="lang.switch" aria-label="Switch to Danish"><span data-i18n="lang.other">DA</span></button>
+    </div>
+  </header>
+
+  <section class="band">
+    <p class="note"><a href="index.html">&larr; Hub</a></p>
+    <p class="note">This list grows as the course runs. The English comes from the sheets. The Danish comes from you — it is blank on the printed worksheet, you fill it in, and what you write ends up here.</p>
+  </section>
+
+  <section class="band" id="collected" aria-labelledby="coll-h">
+    <div class="band__headrow">
+      <h2 class="band__head" id="coll-h">Collected so far</h2>
+      <span class="stamp">3 words</span>
+    </div>
+    <dl class="gloss">
+      <div class="gloss__row">
+        <dt data-i18n="gloss.tile">tile</dt>
+        <dd data-i18n="gloss.tile.da">flise</dd>
+        <span class="mark" data-i18n="gloss.searchable">Searchable</span>
+      </div>
+      <div class="gloss__row">
+        <dt data-i18n="gloss.seam">seam</dt>
+        <dd data-i18n="gloss.seam.da">søm</dd>
+        <span class="mark" data-i18n="gloss.searchable">Searchable</span>
+      </div>
+      <div class="gloss__row">
+        <dt data-i18n="gloss.readatsize">read at size</dt>
+        <dd data-i18n="gloss.notcollected">— not collected yet</dd>
+        <span class="mark mark--ours" data-i18n="gloss.ours">Ours</span>
+      </div>
+    </dl>
+    <ul class="points">
+      <li><strong>Searchable</strong> means you can type it into a search box and get useful results.</li>
+      <li><strong>Ours</strong> means we made the phrase up in this class. It will not find you anything, and that is fine.</li>
+    </ul>
+  </section>
+
+  <section class="band" aria-labelledby="decoy-h">
+    <h2 class="band__head" id="decoy-h">Words that lie to search engines</h2>
+    <p class="note">More useful than the definitions. Each of these returns the wrong thing, so the second word is what to type instead.</p>
+    <dl class="gloss">
+      <div class="gloss__row">
+        <dt>point of view</dt>
+        <dd>→ type <strong>avatar</strong></dd>
+        <span class="mark">Returns camera tutorials</span>
+      </div>
+      <div class="gloss__row">
+        <dt>texture</dt>
+        <dd>→ type <strong>tileable pattern</strong></dd>
+        <span class="mark">Returns 3D material packs</span>
+      </div>
+      <div class="gloss__row">
+        <dt>pixel art</dt>
+        <dd>→ type <strong>1-bit</strong> or <strong>8×8 tile</strong></dd>
+        <span class="mark">Returns 64-colour tutorials</span>
+      </div>
+    </dl>
+  </section>
+
+  <section class="band">
+    <h2 class="band__head">Where words come from</h2>
+    <p class="note">A word joins this list when someone needed it in the room and nobody had it yet. That is the only entry requirement.</p>
+  </section>
+
+</div>
+
+<nav class="tabbar" aria-label="Portal">
+  <div class="tabbar__inner">
+    <a href="index.html" data-i18n="bar.sheets">Hub</a>
+    <a href="art.html" data-i18n="bar.art">Art unit</a>
+    <a href="glossary.html" aria-current="page" data-i18n="bar.gloss">Ordliste</a>
+  </div>
+</nav>
+
+<script src="js/i18n.js"></script>
+<script src="js/sprites.js"></script>
+</body>
+</html>

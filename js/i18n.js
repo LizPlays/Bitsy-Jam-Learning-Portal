@@ -31,7 +31,7 @@
       'nav.steps8': '8 steps',
       'nav.pending': 'Not written yet',
 
-      'session.head': 'This session',
+      'session.head': 'Snapshot from our session',
       'activity.title': 'Textures in 8×8',
       'pair.reject': '✕ The lines do not meet',
       'pair.keeper': '✓ Grass carries across',
@@ -44,7 +44,8 @@
       'selfcheck.solo': 'On your own: hold the taped square at arm\u2019s length instead of asking someone.',
 
       'action.print': 'Print the sheet · PDF not committed yet',
-      'action.dive': 'Deeper dive · not written yet',
+      'action.dive': 'Deeper dive',
+      'bar.art': 'Art unit',
 
       'gloss.head': 'Ordliste · Glossary',
       'gloss.tile': 'tile',
@@ -68,7 +69,7 @@
       'spots.sub': 'A Spot opens after a session runs. Disagreement goes at the top, names stay off, and the viewing instruction is the same self-check the maker used.',
       'pix.spots': 'Pix waits beside the empty Spots list',
 
-      'bar.sheets': 'Sheets',
+      'bar.sheets': 'Hub',
       'bar.exercises': 'Exercises',
       'bar.gloss': 'Ordliste',
       'skip': 'Skip to sheet index',
@@ -95,7 +96,7 @@
       'nav.steps8': '8 trin',
       'nav.pending': 'Ikke skrevet endnu',
 
-      'session.head': 'Denne lektion',
+      'session.head': 'Øjebliksbillede fra timen',
       'activity.title': 'Strukturer i 8×8',
       'pair.reject': '✕ Linjerne mødes ikke',
       'pair.keeper': '✓ Græsset fortsætter',
@@ -108,7 +109,8 @@
       'selfcheck.solo': 'Alene: hold kvadratet ud i strakt arm i stedet for at spørge nogen.',
 
       'action.print': 'Print arket · PDF mangler endnu',
-      'action.dive': 'Gå dybere · ikke skrevet endnu',
+      'action.dive': 'Gå dybere',
+      'bar.art': 'Kunstforløb',
 
       'gloss.head': 'Ordliste · Glossary',
       'gloss.tile': 'flise',
@@ -132,7 +134,7 @@
       'spots.sub': 'En side åbner efter en lektion. Uenighed står øverst, navne bliver væk, og læseinstruktionen er det samme selvtjek, som eleven brugte.',
       'pix.spots': 'Pix venter ved den tomme liste',
 
-      'bar.sheets': 'Ark',
+      'bar.sheets': 'Forside',
       'bar.exercises': 'Øvelser',
       'bar.gloss': 'Ordliste',
       'skip': 'Gå til arkoversigt',

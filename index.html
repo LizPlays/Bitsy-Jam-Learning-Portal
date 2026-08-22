@@ -27,7 +27,7 @@
   </header>
 
   <nav class="sheets" id="sheets" aria-label="Topics">
-    <a class="sheet" href="#session">
+    <a class="sheet" href="art.html">
       <span class="sheet__num">01</span>
       <span class="sheet__name" data-i18n="nav.art">Art</span>
       <span class="sheet__meta" data-i18n="nav.sheets4">4 sheets</span>
@@ -45,12 +45,15 @@
     </div>
   </nav>
 
+  <!-- SNAPSHOT: one card, always the most recent session. After teaching, edit the
+       three things below — the title/slug, the two demo tiles, and the note. Older
+       sessions do not accumulate here; they live on their own sheet page. -->
   <section class="band" id="session" aria-labelledby="session-h">
-    <h2 class="band__head" id="session-h" data-i18n="session.head">This session</h2>
+    <h2 class="band__head" id="session-h" data-i18n="session.head">Snapshot from our session</h2>
 
     <article class="activity">
       <div class="activity__head">
-        <h3 data-i18n="activity.title">Textures in 8×8</h3>
+        <h3><a href="art-tex-02.html" data-i18n="activity.title">Textures in 8×8</a></h3>
         <span class="activity__slug">art-tex-02</span>
       </div>
 
@@ -72,52 +75,19 @@
       </div>
       <p class="note" data-i18n="pair.note">Both are four copies of one tile. A straight line has to land exactly on the edge or your eye finds the join before it finds the surface. Scattered marks forgive you.</p>
 
-      <div class="rules">
-        <div class="rules__group">
-          <span class="rules__label" data-i18n="constraint.label">The constraint</span>
-          <p data-i18n="constraint.text">Eight by eight squares. Two colours. Filled or empty, nothing between.</p>
-        </div>
-        <div class="rules__group">
-          <span class="rules__label" data-i18n="selfcheck.label">The self-check</span>
-          <p data-i18n="selfcheck.text">Copy your tile four times and tape it into a square. If your eye lands on the join before it lands on the surface, it is not finished.</p>
-          <p class="solo" data-i18n="selfcheck.solo">On your own: hold the taped square at arm’s length instead of asking someone.</p>
-        </div>
-      </div>
-
       <div class="actions">
-        <span class="btn btn--pending" role="link" aria-disabled="true" data-i18n="action.print">Print the sheet · PDF not committed yet</span>
-        <span class="btn btn--pending" role="link" aria-disabled="true" data-i18n="action.dive">Deeper dive · not written yet</span>
+        <a class="btn btn--primary" href="art-tex-02.html">Open the sheet</a>
+        <a class="btn btn--ghost" href="art-deep.html#tex-tool">Test a tile</a>
       </div>
     </article>
   </section>
 
   <section class="band" id="glossary" aria-labelledby="gloss-h">
     <h2 class="band__head" id="gloss-h" data-i18n="gloss.head">Ordliste · Glossary</h2>
-    <dl class="gloss">
-      <div class="gloss__row">
-        <dt data-i18n="gloss.tile">tile</dt>
-        <dd data-i18n="gloss.tile.da">flise</dd>
-        <span class="mark" data-i18n="gloss.searchable">Searchable</span>
-      </div>
-      <div class="gloss__row">
-        <dt data-i18n="gloss.seam">seam</dt>
-        <dd data-i18n="gloss.seam.da">søm</dd>
-        <span class="mark" data-i18n="gloss.searchable">Searchable</span>
-      </div>
-      <div class="gloss__row">
-        <dt data-i18n="gloss.readatsize">read at size</dt>
-        <dd data-i18n="gloss.notcollected">— not collected yet</dd>
-        <span class="mark mark--ours" data-i18n="gloss.ours">Ours</span>
-      </div>
-    </dl>
-    <p class="decoy">
-      <span data-i18n="gloss.decoy.before">Searching</span>
-      <em data-i18n="gloss.decoy.term">point of view</em>
-      <span data-i18n="gloss.decoy.middle">returns camera tutorials. Type</span>
-      <strong data-i18n="gloss.decoy.instead">avatar</strong>
-      <span data-i18n="gloss.decoy.after">instead.</span>
-    </p>
-    <span class="btn btn--pending" role="link" aria-disabled="true" data-i18n="gloss.all">All 34 words · glossary page next</span>
+    <p class="note">The words we use, English and Danish, plus the ones that lie to search engines.</p>
+    <div class="actions">
+      <a class="btn btn--ghost" href="glossary.html">Open the ordliste</a>
+    </div>
   </section>
 
   <section class="band" id="spots" aria-labelledby="spots-h">
@@ -139,8 +109,9 @@
 
 <nav class="tabbar" aria-label="Portal">
   <div class="tabbar__inner">
-    <a href="#sheets" aria-current="page" data-i18n="bar.sheets">Sheets</a>
-    <a href="#glossary" data-i18n="bar.gloss">Ordliste</a>
+    <a href="#sheets" aria-current="page" data-i18n="bar.sheets">Hub</a>
+    <a href="art.html" data-i18n="bar.art">Art unit</a>
+    <a href="glossary.html" data-i18n="bar.gloss">Ordliste</a>
   </div>
 </nav>
 

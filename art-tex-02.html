@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Textures in 8×8 — Bitsy Jam</title>
+<meta name="description" content="art-tex-02. Draw a texture as an 8×8 two-colour tile and test whether it repeats.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/portal.css">
+</head>
+<body>
+<a class="skip-link" href="#demo">Skip to the demo</a>
+
+<div class="shell">
+
+  <header class="masthead">
+    <div class="masthead__titles">
+      <span class="eyebrow">Art unit · Sheet 01</span>
+      <h1>Textures in 8×8</h1>
+    </div>
+    <div class="lang">
+      <button type="button" class="lang__btn" data-lang-toggle data-i18n-aria="lang.switch" aria-label="Switch to Danish"><span data-i18n="lang.other">DA</span></button>
+    </div>
+  </header>
+
+  <section class="band" id="demo">
+    <p class="note"><a href="art.html">&larr; Art unit</a> · <span class="activity__slug">art-tex-02</span></p>
+
+    <div class="pair">
+      <figure class="pair__reject">
+        <div class="pair__frame">
+          <canvas data-tile="lines" data-scale="8" data-repeat="2" data-grid="true" role="img"
+                  aria-label="A tile of straight horizontal lines repeated four times; each line stops short of the edge so the lines do not meet at the join"></canvas>
+        </div>
+        <figcaption data-i18n="pair.reject">✕ The lines do not meet</figcaption>
+      </figure>
+      <figure class="pair__keeper">
+        <div class="pair__frame">
+          <canvas data-tile="grass" data-scale="8" data-repeat="2" data-grid="true" role="img"
+                  aria-label="A tile of scattered grass blades repeated four times; the blades carry across the join"></canvas>
+        </div>
+        <figcaption data-i18n="pair.keeper">✓ Grass carries across</figcaption>
+      </figure>
+    </div>
+    <p class="note" data-i18n="pair.note">Both are four copies of one tile. A straight line has to land exactly on the edge or your eye finds the join before it finds the surface. Scattered marks forgive you.</p>
+
+    <div class="rules">
+      <div class="rules__group">
+        <span class="rules__label" data-i18n="constraint.label">The constraint</span>
+        <p data-i18n="constraint.text">Eight by eight squares. Two colours. Filled or empty, nothing between.</p>
+      </div>
+      <div class="rules__group">
+        <span class="rules__label" data-i18n="selfcheck.label">The self-check</span>
+        <p data-i18n="selfcheck.text">Copy your tile four times and tape it into a square. If your eye lands on the join before it lands on the surface, it is not finished.</p>
+        <p class="solo" data-i18n="selfcheck.solo">On your own: hold the taped square at arm’s length instead of asking someone.</p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <span class="btn btn--pending" role="link" aria-disabled="true" data-i18n="action.print">Print the sheet · PDF not committed yet</span>
+      <a class="btn btn--ghost" href="art-deep.html#texture" data-i18n="action.dive">Deeper dive</a>
+      <a class="btn btn--ghost" href="art-deep.html#tex-tool">Test a tile</a>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="ord-h">
+    <h2 class="band__head" id="ord-h">Ordliste for this sheet</h2>
+    <dl class="gloss">
+      <div class="gloss__row">
+        <dt data-i18n="gloss.tile">tile</dt>
+        <dd data-i18n="gloss.tile.da">flise</dd>
+        <span class="mark" data-i18n="gloss.searchable">Searchable</span>
+      </div>
+      <div class="gloss__row">
+        <dt data-i18n="gloss.seam">seam</dt>
+        <dd data-i18n="gloss.seam.da">søm</dd>
+        <span class="mark" data-i18n="gloss.searchable">Searchable</span>
+      </div>
+      <div class="gloss__row">
+        <dt data-i18n="gloss.readatsize">read at size</dt>
+        <dd data-i18n="gloss.notcollected">— not collected yet</dd>
+        <span class="mark mark--ours" data-i18n="gloss.ours">Ours</span>
+      </div>
+    </dl>
+    <p class="note">The Danish column is blank on the printed sheet. Pupils fill it in, and what they write is what ends up here.</p>
+    <div class="actions">
+      <a class="btn btn--ghost" href="glossary.html">All words</a>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="spot-h">
+    <div class="band__headrow">
+      <h2 class="band__head" id="spot-h" data-i18n="spots.head">Co-discovery spot</h2>
+      <span class="stamp" data-i18n="spots.stamp">Empty until taught</span>
+    </div>
+    <div class="empty">
+      <canvas data-sprite="pix" data-scale="4" data-animate="true" role="img"
+              data-i18n-aria="pix.spots" aria-label="Pix waits beside the empty Spots list"></canvas>
+      <div class="empty__copy">
+        <p class="empty__lead" data-i18n="spots.lead">Nothing here yet. Nobody has made anything.</p>
+        <p class="empty__sub" data-i18n="spots.sub">A Spot opens after a session runs. Disagreement goes at the top, names stay off, and the viewing instruction is the same self-check the maker used.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<nav class="tabbar" aria-label="Portal">
+  <div class="tabbar__inner">
+    <a href="index.html">Hub</a>
+    <a href="art.html">Art unit</a>
+    <a href="glossary.html" data-i18n="bar.gloss">Ordliste</a>
+  </div>
+</nav>
+
+<script src="js/i18n.js"></script>
+<script src="js/sprites.js"></script>
+</body>
+</html>

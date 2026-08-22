@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Art — four ways of looking — Bitsy Jam</title>
+<meta name="description" content="Texture, scale, implied perspective and colour at 8×8. Reference reading for the Bitsy Jam art unit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/portal.css">
+</head>
+<body>
+<a class="skip-link" href="#texture">Skip to texture</a>
+
+<div class="shell shell--wide">
+
+  <header class="masthead">
+    <div class="masthead__titles">
+      <span class="eyebrow">Art · Deeper dive</span>
+      <h1>Four ways of looking</h1>
+    </div>
+  </header>
+
+  <section class="band">
+    <p class="note"><a href="art.html">&larr; Art unit</a></p>
+    <p class="note">You drew a tile and taped four copies together. This page is why the ones that worked worked. Nothing here is assigned — read it if you got curious, skip it if you did not.</p>
+    <p class="note"><strong>A room has three colours. A tile has two.</strong> Bitsy gives each room a background, a tile colour and a sprite colour. But any one tile you draw is two-colour: a square is filled or it is empty. Colour is stored apart from the drawing, which is why the same tile can be stone in one room and moss in the next.</p>
+    <p class="note">These four are a way of looking, not a list of correct answers. If what you see is none of them, that is more interesting.</p>
+  </section>
+
+  <div class="layout">
+
+  <nav class="sidenav" aria-label="On this page">
+    <span class="sidenav__label">Topics</span>
+    <ol class="sidenav__list">
+      <li>
+        <a href="#texture">Texture</a>
+        <ol class="sidenav__sub">
+          <li><a href="#tex-compare">Flat vs. two variants</a></li>
+          <li><a href="#tex-tool">Test tool</a></li>
+        </ol>
+      </li>
+      <li><a href="#scale">Scale</a></li>
+      <li><a href="#perspective">Implied perspective</a></li>
+      <li><a href="#colour">Colour</a></li>
+    </ol>
+    <p class="sidenav__hint">Bookmark any topic — each one has its own link.</p>
+  </nav>
+
+  <div class="layout__main">
+
+  <!-- ── TEXTURE ── -->
+  <section class="band" id="texture" aria-labelledby="tex-h">
+    <h2 class="band__head" id="tex-h">01 · Texture</h2>
+    <div class="define">
+      <p>Texture is the pattern inside a tile. A tile filled solid reads as paint. The same tile with mortar gaps, broken edges and uneven weight reads as stone. The pattern carries the material, and the material is part of the story.</p>
+    </div>
+
+    <h3 class="sub" id="tex-compare">Flat, versus two variants alternating</h3>
+    <div class="pair">
+      <figure>
+        <div class="pair__frame">
+          <canvas data-tile="flat" data-scale="6" data-repeat="4" data-grid="true" role="img"
+                  aria-label="A solid filled tile repeated sixteen times; every cell identical, no visible material"></canvas>
+        </div>
+        <figcaption>Solid fill, tiled 4×4</figcaption>
+      </figure>
+      <figure>
+        <div class="pair__frame">
+          <canvas data-tile="stoneA" data-tile-b="stoneB" data-scale="6" data-repeat="4" data-grid="true" role="img"
+                  aria-label="Two stone tiles with mortar gaps alternating in a checkerboard across sixteen cells; the repeat is no longer obvious"></canvas>
+        </div>
+        <figcaption>Two variants, alternated</figcaption>
+      </figure>
+    </div>
+    <p class="note">Left: every cell is identical, so the wall has no weight and no age. Right: two stone tiles placed in a checkerboard. The repeat breaks and the wall reads as masonry.</p>
+
+    <ul class="points">
+      <li><strong>Mortar gaps.</strong> Empty squares at the tile edge become the gap between stones. The grid stops being a grid and becomes the material.</li>
+      <li><strong>Uneven weight.</strong> Some rows carry more filled squares than others. A solid fill has none of this, which is why it reads as paint.</li>
+      <li><strong>Two variants, not one.</strong> A single textured tile repeated is still wallpaper. The second variant is what breaks the pattern.</li>
+    </ul>
+
+    <h3 class="sub" id="tex-tool">Test tool — draw a tile, watch it repeat</h3>
+    <p class="note">Two colours only, same as the worksheet. Change the palette and the drawing does not change, which is the whole point.</p>
+
+    <div class="tool" data-tile-tool>
+      <div class="tool__palette">
+        <span class="tool__label">Palette</span>
+        <div class="tool__pairs" data-tt-pairs role="group" aria-label="Palette presets"></div>
+        <span class="tool__custom">
+          <label>Background <input type="color" value="#252320" data-tt-bg></label>
+          <label>Ink <input type="color" value="#C98F5C" data-tt-ink></label>
+        </span>
+      </div>
+
+      <div class="tool__cols">
+        <div class="tool__col">
+          <span class="tool__label" id="tt-draw-label">Draw · 8×8</span>
+          <canvas data-tt-edit role="application" aria-label="Tile editor, an 8 by 8 grid of squares"
+                  aria-describedby="tt-help"></canvas>
+          <p class="tool__hint" id="tt-help">Click or drag to fill and clear. With the keyboard: arrow keys move, space toggles.</p>
+          <p class="tool__count" data-tt-count aria-live="polite">18 of 64 filled</p>
+          <div class="tool__row">
+            <button type="button" class="chip" data-tt-clear>Clear</button>
+            <button type="button" class="chip" data-tt-invert>Invert</button>
+          </div>
+        </div>
+
+        <div class="tool__col">
+          <span class="tool__label">Repeated 4×4</span>
+          <canvas data-tt-repeat role="img" aria-label="Your tile repeated sixteen times"></canvas>
+          <p class="tool__hint">Does it read as a surface, or as wallpaper? Look at the joins before you look at the middle.</p>
+          <div class="tool__row">
+            <button type="button" class="chip" data-tt-save>↓ Save PNG</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool__refs">
+        <span class="tool__label">Load a reference tile</span>
+        <div class="tool__row" role="group" aria-label="Reference tiles">
+          <button type="button" class="chip" data-tt-load="flat" aria-pressed="false">Flat</button>
+          <button type="button" class="chip" data-tt-load="stoneA" aria-pressed="false">Stone A</button>
+          <button type="button" class="chip" data-tt-load="stoneB" aria-pressed="false">Stone B</button>
+          <button type="button" class="chip" data-tt-load="grass" aria-pressed="true">Grass</button>
+          <button type="button" class="chip" data-tt-load="lines" aria-pressed="false">Lines</button>
+          <button type="button" class="chip" data-tt-load="brick" aria-pressed="false">Brick</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SCALE ── -->
+  <section class="band" id="scale" aria-labelledby="scale-h">
+    <h2 class="band__head" id="scale-h">02 · Scale</h2>
+    <div class="define">
+      <p>Every tile is 8×8 and that never changes. What changes is how many tiles a thing claims. A door two tiles tall reads as something you walk through. A door the same size as the player reads as a mark on the wall. The player is the fixed reference: everything else is large or small next to it.</p>
+    </div>
+
+    <div class="pair">
+      <figure>
+        <div class="room">
+          <canvas data-room="flat" data-scale="19" role="img"
+                  aria-label="A room where tree, door, player and window each occupy one tile"></canvas>
+          <div class="room__labels" data-room-labels></div>
+        </div>
+        <figcaption>Every element one tile</figcaption>
+      </figure>
+      <figure>
+        <div class="room">
+          <canvas data-room="scaled" data-scale="19" role="img"
+                  aria-label="The same room where the tree spans seven tiles and the door two, while player and window stay at one"></canvas>
+          <div class="room__labels" data-room-labels></div>
+        </div>
+        <figcaption>Intentional scale</figcaption>
+      </figure>
+    </div>
+    <p class="note">Same four elements both times. On the left the room has objects but no sense of place. On the right the player is small because the environment says so.</p>
+
+    <ul class="points">
+      <li><strong>Tree, seven tiles.</strong> Bigger than the player and the door, so the player is inside an environment rather than standing next to a prop.</li>
+      <li><strong>Door, two tiles tall.</strong> Taller than the player, so it reads as a passage. At one tile it reads as a mark on the wall.</li>
+      <li><strong>Window, one tile.</strong> Smaller than the door. That difference alone signals building.</li>
+      <li><strong>Player, one tile, always.</strong> The fixed reference. Everything else is measured against it.</li>
+    </ul>
+    <p class="note">A bigger element is not a bigger tile — it is several tiles arranged to read as one thing. A two-tile door is two 8×8 drawings stacked. A seven-tile tree is seven drawings composed into canopy and trunk.</p>
+  </section>
+
+  <!-- ── IMPLIED PERSPECTIVE ── -->
+  <section class="band" id="perspective" aria-labelledby="persp-h">
+    <h2 class="band__head" id="persp-h">03 · Implied perspective</h2>
+    <div class="define">
+      <p>Bitsy is always top-down. But you can draw tiles that make a player feel they are looking across a floor, or at a wall face-on, or up at something tall. The camera never moves. Your drawings do the work. That is implied perspective: pixel shapes suggesting a viewpoint the game cannot actually show.</p>
+    </div>
+
+    <div class="trio">
+      <figure>
+        <div class="pair__frame">
+          <canvas data-tile="floor" data-scale="8" data-repeat="2" data-grid="true" role="img"
+                  aria-label="Scattered single pixels with no direction, reading as a floor seen from above"></canvas>
+        </div>
+        <figcaption>Reads as floor</figcaption>
+      </figure>
+      <figure>
+        <div class="pair__frame">
+          <canvas data-tile="wall" data-scale="8" data-repeat="2" data-grid="true" role="img"
+                  aria-label="Horizontal courses with a gap between them, reading as a wall seen face-on"></canvas>
+        </div>
+        <figcaption>Reads as wall</figcaption>
+      </figure>
+      <figure>
+        <div class="pair__frame">
+          <canvas data-tile="lookup" data-scale="8" data-repeat="2" data-grid="true" role="img"
+                  aria-label="Lines converging towards the bottom, reading as looking up something tall"></canvas>
+        </div>
+        <figcaption>Reads as looking up</figcaption>
+      </figure>
+    </div>
+
+    <ul class="points">
+      <li><strong>Direction is the cue.</strong> Marks with no direction lie flat. Horizontal courses stand up. Converging lines lean away from you.</li>
+      <li><strong>Nothing changed but the pattern.</strong> Same grid, same two colours, same footprint in the room.</li>
+      <li><strong>Mixing them breaks it.</strong> A wall tile next to a floor tile only works if the room agrees which one the player is standing on.</li>
+    </ul>
+  </section>
+
+  <!-- ── COLOUR ── -->
+  <section class="band" id="colour" aria-labelledby="col-h">
+    <h2 class="band__head" id="col-h">04 · Colour</h2>
+    <div class="define">
+      <p>A room gets three palette entries: background, tiles, sprites. That is the whole palette. Change those three and the feeling of the world changes — the same map in warm browns is not the same place as the same map in cold blue. Colour is mood, and it is the first thing anyone notices.</p>
+    </div>
+
+    <h3 class="sub">One tile, four palettes</h3>
+    <div class="quad">
+      <figure>
+        <div class="pair__frame">
+          <canvas data-tile="grass" data-scale="7" data-repeat="2" data-color="#C98F5C" data-bg="#252320" role="img"
+                  aria-label="The grass tile in warm brown on near-black"></canvas>
+        </div>
+        <figcaption>Stone</figcaption>
+      </figure>
+      <figure>
+        <div class="pair__frame">
+          <canvas data-tile="grass" data-scale="7" data-repeat="2" data-color="#8FA085" data-bg="#22261F" role="img"
+                  aria-label="The same grass tile in sage green on dark green"></canvas>
+        </div>
+        <figcaption>Moss</figcaption>
+      </figure>
+      <figure>
+        <div class="pair__frame">
+          <canvas data-tile="grass" data-scale="7" data-repeat="2" data-color="#9FB6C2" data-bg="#1E2428" role="img"
+                  aria-label="The same grass tile in pale blue on cold dark blue"></canvas>
+        </div>
+        <figcaption>Frost</figcaption>
+      </figure>
+      <figure>
+        <div class="pair__frame">
+          <canvas data-tile="grass" data-scale="7" data-repeat="2" data-color="#3A332C" data-bg="#EFEAE3" role="img"
+                  aria-label="The same grass tile as dark marks on pale paper"></canvas>
+        </div>
+        <figcaption>Paper</figcaption>
+      </figure>
+    </div>
+    <p class="note">Four different places. One drawing. Not a single filled square moved.</p>
+
+    <ul class="points">
+      <li><strong>Colour is separate from the drawing.</strong> That is why the worksheet is in pencil and still works.</li>
+      <li><strong>Contrast does double duty.</strong> Strong contrast makes texture legible and makes a place feel hard. Low contrast reads soft, and hides your seams.</li>
+      <li><strong>Test at low contrast.</strong> If your tile only reads in the loudest palette, the pattern is doing less work than you think.</li>
+    </ul>
+
+    <div class="empty" style="margin-top:4px">
+      <canvas data-sprite="pix" data-scale="4" data-animate="true" role="img"
+              aria-label="Pix asks a question about palettes"></canvas>
+      <div class="empty__copy">
+        <p class="empty__lead">Pix: Try the boring palette. Does the tile survive it?</p>
+      </div>
+    </div>
+  </section>
+
+  </div>
+  </div>
+
+  <section class="band">
+    <p class="note">These pages are English only for now. The worksheets and the ordliste are the bilingual part.</p>
+  </section>
+
+</div>
+
+<nav class="tabbar" aria-label="Portal">
+  <div class="tabbar__inner">
+    <a href="index.html">Hub</a>
+    <a href="art.html">Art unit</a>
+    <a href="glossary.html">Ordliste</a>
+  </div>
+</nav>
+
+<script src="js/toc.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/texture-tool.js"></script>
+</body>
+</html>
