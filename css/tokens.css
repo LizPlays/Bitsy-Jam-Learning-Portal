@@ -1,0 +1,87 @@
+/* Bitsy Jam portal — design tokens.
+   Pupil-facing pages inherit this file and nothing else. Do not add a second palette. */
+
+:root {
+  /* Surfaces */
+  --bg-page: #2B2926;
+  --bg-card: #252320;
+  --bg-raise: #3A3733;
+  --bg-bar: #241F1B;
+
+  /* Ink */
+  --text-strong: #EFEAE3;
+  --text-body: #D6D0C8;
+  --text-soft: #C9C2BA;
+  --text-muted: #A39A90;
+  --text-dim: #8F8880;
+
+  /* Accent — one accent, on purpose */
+  --accent: #C98F5C;
+  --accent-text: #DDA372;
+  --accent-hover: #EFC59B;
+  --accent-on: #241F1B;
+
+  /* Confirmation ink, used with a mark as well as a colour */
+  --ok-text: #B7C0AC;
+
+  /* Lines */
+  --line: rgba(239, 234, 227, 0.14);
+  --line-strong: rgba(239, 234, 227, 0.2);
+  --border: #6B6560;
+  --border-dim: #5C5751;
+  --grid-ink: rgba(230, 225, 218, 0.07);
+
+  /* Tile overlay ink, read by js/sprites.js */
+  --tile-grid: rgba(239, 234, 227, 0.14);
+  --tile-grid-edge: rgba(239, 234, 227, 0.38);
+
+  /* Type */
+  --font-body: 'Nunito', system-ui, -apple-system, sans-serif;
+
+  /* Rhythm */
+  --pad: 20px;
+  --tap: 44px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { background: var(--bg-page); -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg-page);
+  background-image:
+    linear-gradient(to right, var(--grid-ink) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-ink) 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: var(--text-strong);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+a { color: var(--accent-text); }
+a:hover { color: var(--accent-hover); }
+
+:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 2px; }
+
+h1, h2, h3 { margin: 0; }
+
+canvas, img { image-rendering: pixelated; }
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 9;
+  background: var(--accent); color: var(--accent-on);
+  font-weight: 800; font-size: 12px; padding: 8px 12px; text-decoration: none;
+}
+.skip-link:focus { left: 8px; top: 8px; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
