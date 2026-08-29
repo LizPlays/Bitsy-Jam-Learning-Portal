@@ -7,6 +7,8 @@
   --bg-card: #252320;
   --bg-raise: #3A3733;
   --bg-bar: #241F1B;
+  /* The one band on the Hub that is work to do rather than something to read. */
+  --bg-key: #2F2C28;
 
   /* Ink */
   --text-strong: #EFEAE3;
@@ -30,6 +32,7 @@
   --border: #6B6560;
   --border-dim: #5C5751;
   --grid-ink: rgba(230, 225, 218, 0.07);
+  --grid-ink-key: rgba(239, 234, 227, 0.06);
 
   /* Tile overlay ink, read by js/sprites.js */
   --tile-grid: rgba(239, 234, 227, 0.14);

@@ -32,6 +32,7 @@
       'nav.pending': 'Not written yet',
 
       'session.head': 'Snapshot from our session',
+      'session.stamp': 'Try this one',
       'activity.title': 'Textures in 8×8',
       'pair.reject': '✕ The lines do not meet',
       'pair.keeper': '✓ Grass carries across',
@@ -149,6 +150,7 @@
       'nav.pending': 'Ikke skrevet endnu',
 
       'session.head': 'Øjebliksbillede fra timen',
+      'session.stamp': 'Prøv denne',
       'activity.title': 'Strukturer i 8×8',
       'pair.reject': '✕ Linjerne mødes ikke',
       'pair.keeper': '✓ Græsset fortsætter',
