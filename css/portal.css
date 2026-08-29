@@ -447,3 +447,22 @@ h3.sub {
 
 .activity--key { border: 2px solid var(--accent); }
 .activity--key h3 { font-size: 20px; }
+
+/* ---- site footer ----
+   One link, quiet, above the fixed tab bar. The label is the same string in
+   both languages — like "Ordliste · Glossary" — so it still reads correctly on
+   the two pages that do not yet load i18n.js. */
+
+.siteft {
+  margin-top: 8px;
+  padding: 4px var(--pad) 10px;
+  border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+}
+.siteft a {
+  display: inline-flex; align-items: center; min-height: var(--tap);
+  text-decoration: none; color: var(--text-muted);
+  font-weight: 700; font-size: 12px; letter-spacing: 0.04em;
+}
+.siteft a:hover { color: var(--accent-text); text-decoration: underline; }
+.siteft a[aria-current="page"] { color: var(--accent-text); }
