@@ -333,3 +333,85 @@ h3.sub {
   .sidenav__sub a { font-weight: 600; font-size: 11.5px; color: var(--text-muted); }
   .sidenav__hint { display: block; margin: 14px 0 0; font-size: 11px; color: var(--text-dim); }
 }
+
+/* ---- play: game carousel ---- */
+
+/* Before js/carousel.js runs the viewport scrolls, so all three games are
+   reachable without JavaScript. Once it is ready the track slides instead. */
+.carousel__viewport {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.carousel__track { display: flex; }
+.carousel__track > * { min-width: 100%; scroll-snap-align: start; }
+
+.carousel__nav, .carousel__count { display: none; }
+
+.carousel[data-carousel-ready] .carousel__viewport { overflow: hidden; scroll-snap-type: none; }
+.carousel[data-carousel-ready] .carousel__track { transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+.carousel[data-carousel-ready] .carousel__nav { display: flex; }
+.carousel[data-carousel-ready] .carousel__count { display: block; }
+
+.carousel__nav { align-items: center; justify-content: center; gap: 10px; margin-top: 12px; }
+.carousel__arrow {
+  min-height: var(--tap); min-width: var(--tap); cursor: pointer;
+  background: transparent; border: 1px solid var(--border); color: var(--text-body);
+  font-family: var(--font-body); font-size: 13px;
+}
+.carousel__arrow:hover:not(:disabled) { border-color: var(--accent-text); color: var(--accent-text); }
+.carousel__arrow:disabled { opacity: 0.35; cursor: default; }
+
+.carousel__dots { display: flex; gap: 2px; align-items: center; }
+.carousel__dot {
+  min-height: var(--tap); min-width: 22px; padding: 0; cursor: pointer;
+  background: transparent; border: none;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.carousel__dot::before {
+  content: ""; display: block; width: 9px; height: 9px;
+  background: var(--border); transition: width 0.15s, background 0.15s;
+}
+.carousel__dot:hover::before { background: var(--text-muted); }
+.carousel__dot[aria-current="true"]::before { width: 20px; background: var(--accent); }
+
+.carousel__count {
+  margin: 6px 0 0; text-align: center;
+  font-weight: 800; font-size: 11px; letter-spacing: 0.1em; color: var(--text-muted);
+}
+
+/* ---- play: one game card ---- */
+
+.game {
+  background: var(--bg-card); border: 1px solid var(--line-strong);
+  display: flex; flex-direction: column;
+}
+.game__top { display: flex; gap: 12px; padding: 16px 16px 10px; }
+.game__icon { font-size: 30px; line-height: 1; flex: none; }
+.game__meta { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.game__title { font-weight: 900; font-size: 18px; color: var(--text-strong); }
+.game__creator { margin: 0; font-size: 12.5px; color: var(--text-muted); }
+.game__rating { margin: 0; display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap; }
+.game__rating .stars { font-size: 12px; color: var(--accent-text); letter-spacing: 0.06em; }
+.game__rating .count { font-size: 11.5px; color: var(--text-muted); }
+
+.game__body { padding: 0 16px 12px; display: flex; flex-direction: column; gap: 10px; }
+.game__desc { margin: 0; font-size: 14px; color: var(--text-body); }
+.game__look {
+  margin: 0; padding: 9px 12px; font-size: 13.5px; font-weight: 600; color: var(--text-strong);
+  background: var(--bg-page); border-left: 3px solid var(--accent);
+}
+
+.game__tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.game__tags .tag { text-transform: none; font-size: 10.5px; letter-spacing: 0.03em; }
+
+.game__foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  flex-wrap: wrap; padding: 12px 16px; border-top: 1px solid var(--line); margin-top: auto;
+}
+.game__mod { margin: 0; flex: 1 1 190px; font-size: 11.5px; color: var(--text-muted); }
+.game__play { flex: none; }
+
+@media (max-width: 380px) {
+  .tabbar a { font-size: 11px; letter-spacing: 0.02em; padding: 0 3px; text-align: center; }
+}

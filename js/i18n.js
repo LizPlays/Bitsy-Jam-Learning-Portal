@@ -76,7 +76,59 @@
 
       'bo.eyebrow': 'Exercises · Build order',
       'bo.title': 'Textures: build order',
-      'bo.sub': 'Eight steps, in order — four before you touch a computer'
+      'bo.sub': 'Eight steps, in order — four before you touch a computer',
+
+      'bar.play': 'Play!',
+      'play.skip': 'Skip to the games',
+      'play.eyebrow': 'Play · Vetted',
+      'play.title': 'Games to play',
+      'play.head': 'Games to play',
+      'play.stamp': '3 games',
+      'play.intro': 'Three Bitsy games, played through before they were listed here. Look at how each one is built, not only at what happens in it. Every link opens on itch.io in a new tab.',
+      'play.carousel': 'Vetted Bitsy games',
+      'play.prev': 'Previous game',
+      'play.next': 'Next game',
+      'play.count': '{n} of {t}',
+      'play.dot': 'Game {n} of {t}',
+      'play.btn': 'Play',
+      'play.newtab': ' (opens itch.io in a new tab)',
+      'play.noscript': 'The arrows need JavaScript. Without it all three games are still on this page — scroll sideways.',
+      'play.hub.head': 'Games to play',
+      'play.hub.lead': 'Three Bitsy games worth playing, and what to look at in each one.',
+      'play.hub.btn': 'Open the games',
+
+      'play.mods.head': 'What a mod changes',
+      'play.mods.text': 'Two of these three run on Bitsy HD, a community extension that gives a tile more pixels than Bitsy gives you. The third is base Bitsy with nothing added. Play that one and you know exactly what the tool does on its own — everything past that is somebody having extended it.',
+      'play.mods.why': 'Worth knowing before you copy something you saw. If a game does a thing your Bitsy will not do, the mod is usually the reason, not you.',
+      'play.vet.head': 'Teacher\u2019s note',
+      'play.vet.text': 'Every game here was played through and checked for age-appropriate content before it was added. The tags say whether a game uses mods, so you can tell what standard Bitsy can and cannot do on its own.',
+      'play.vet.solo': 'itch.io is a public site and the rest of it is not vetted. These three links are.',
+
+      'tag.mod': 'Bitsy HD mod',
+      'tag.base': 'standard Bitsy',
+      'tag.mobile': 'mobile + swipe',
+      'tag.silent': 'no audio',
+      'tag.audio': 'has music',
+      'tag.jam': 'jam entry',
+      'tag.favourite': 'community favourite',
+      'tag.dino': 'official Bitsy Jam — Dinosaur theme',
+
+      'mod.hd.before': 'Uses',
+      'mod.hd.after': 'by Fred Bednarski — higher resolution tiles than standard Bitsy.',
+      'mod.base': 'Made with base Bitsy by Adam Le Doux — no hacks or mods. The official Dinosaur Bitsy Jam was hosted by Adam Le Doux himself.',
+
+      'g0.creator': 'by cottonsprout',
+      'g0.rating': '4.9 out of 5, from 146 ratings',
+      'g0.desc': 'You have a train to catch in Tomato Town — but there is a 50% off sale. Walk around, talk to residents, complete small tasks, and maybe do some shopping. A gentle world full of animal characters and hidden details.',
+      'g0.look': 'Look at how the palette and the tile patterns work together. The whole world runs on three colours per room.',
+      'g1.creator': 'by dreamingamaris',
+      'g1.rating': '4.7 out of 5, from 380 ratings',
+      'g1.desc': 'After midnight, strange customers visit a city bakery. Serve cakes to witches, vampires, ghosts, and stranger folk. Your choices matter — there are 21 possible outcomes. Made for JamCraft 3.',
+      'g1.look': 'Notice how the dialogue branches work. Every customer teaches you something about what dialogue can do in a tiny game.',
+      'g2.creator': 'by AK',
+      'g2.rating': '4.8 out of 5, from 59 ratings',
+      'g2.desc': 'You are on a mission to take selfies with all the dinosaur skeletons at the museum. You are not allowed to climb on them. This is a game about what counts as a rule and how far you will go for a good photo.',
+      'g2.look': 'This was made in standard Bitsy — no mods. Everything you see is what the base tool can do. A good reference point before you start building.'
     },
 
     da: {
@@ -141,7 +193,59 @@
 
       'bo.eyebrow': 'Øvelser · Byggerækkefølge',
       'bo.title': 'Strukturer: byggerækkefølge',
-      'bo.sub': 'Otte trin i rækkefølge — fire før du rører en computer'
+      'bo.sub': 'Otte trin i rækkefølge — fire før du rører en computer',
+
+      'bar.play': 'Spil!',
+      'play.skip': 'Gå til spillene',
+      'play.eyebrow': 'Spil · Gennemset',
+      'play.title': 'Spil du kan spille',
+      'play.head': 'Spil du kan spille',
+      'play.stamp': '3 spil',
+      'play.intro': 'Tre Bitsy-spil, spillet igennem før de kom på listen. Se på hvordan hvert enkelt er bygget, ikke kun hvad der sker i det. Alle links åbner på itch.io i en ny fane.',
+      'play.carousel': 'Gennemsete Bitsy-spil',
+      'play.prev': 'Forrige spil',
+      'play.next': 'Næste spil',
+      'play.count': '{n} af {t}',
+      'play.dot': 'Spil {n} af {t}',
+      'play.btn': 'Spil',
+      'play.newtab': ' (åbner itch.io i en ny fane)',
+      'play.noscript': 'Pilene kræver JavaScript. Uden det ligger alle tre spil stadig på siden — rul til siden.',
+      'play.hub.head': 'Spil du kan spille',
+      'play.hub.lead': 'Tre Bitsy-spil, der er værd at spille, og hvad du skal kigge efter i hvert af dem.',
+      'play.hub.btn': 'Åbn spillene',
+
+      'play.mods.head': 'Hvad en mod ændrer',
+      'play.mods.text': 'To af de tre kører på Bitsy HD, en udvidelse lavet af fællesskabet, som giver en flise flere pixels end Bitsy selv giver dig. Det tredje er ren Bitsy uden noget tilføjet. Spiller du det, ved du præcis hvad værktøjet kan i sig selv — alt derudover er nogen, der har bygget videre.',
+      'play.mods.why': 'Værd at vide, før du kopierer noget, du har set. Hvis et spil gør noget, din Bitsy ikke vil gøre, er modden som regel grunden, ikke dig.',
+      'play.vet.head': 'Lærerens note',
+      'play.vet.text': 'Alle spil her er spillet igennem og tjekket for alderssvarende indhold, før de blev sat på. Mærkaterne siger, om et spil bruger mods, så du kan se hvad standard-Bitsy kan og ikke kan i sig selv.',
+      'play.vet.solo': 'itch.io er en offentlig side, og resten af den er ikke gennemset. Det er de tre links her.',
+
+      'tag.mod': 'Bitsy HD-mod',
+      'tag.base': 'standard-Bitsy',
+      'tag.mobile': 'mobil + swipe',
+      'tag.silent': 'ingen lyd',
+      'tag.audio': 'har musik',
+      'tag.jam': 'jam-bidrag',
+      'tag.favourite': 'fællesskabets favorit',
+      'tag.dino': 'officiel Bitsy Jam — dinosaurtema',
+
+      'mod.hd.before': 'Bruger',
+      'mod.hd.after': 'af Fred Bednarski — fliser med højere opløsning end standard-Bitsy.',
+      'mod.base': 'Lavet i ren Bitsy af Adam Le Doux — ingen hacks eller mods. Den officielle Dinosaur Bitsy Jam blev afholdt af Adam Le Doux selv.',
+
+      'g0.creator': 'af cottonsprout',
+      'g0.rating': '4,9 ud af 5, fra 146 bedømmelser',
+      'g0.desc': 'Du skal nå et tog i Tomato Town — men der er 50% udsalg. Gå rundt, snak med beboerne, løs små opgaver, og shop måske lidt. En rolig verden fuld af dyrefigurer og skjulte detaljer.',
+      'g0.look': 'Se på hvordan paletten og flisemønstrene arbejder sammen. Hele verden kører på tre farver pr. rum.',
+      'g1.creator': 'af dreamingamaris',
+      'g1.rating': '4,7 ud af 5, fra 380 bedømmelser',
+      'g1.desc': 'Efter midnat kommer der mærkelige kunder i et bageri i byen. Servér kager for hekse, vampyrer, spøgelser og endnu mærkeligere væsner. Dine valg betyder noget — der er 21 mulige slutninger. Lavet til JamCraft 3.',
+      'g1.look': 'Læg mærke til hvordan dialogen forgrener sig. Hver kunde viser dig noget om, hvad dialog kan i et lille spil.',
+      'g2.creator': 'af AK',
+      'g2.rating': '4,8 ud af 5, fra 59 bedømmelser',
+      'g2.desc': 'Du er på en mission for at tage selfies med alle dinosaurskeletterne på museet. Du må ikke kravle op på dem. Det her er et spil om, hvad der tæller som en regel, og hvor langt du vil gå for et godt billede.',
+      'g2.look': 'Det her er lavet i standard-Bitsy — ingen mods. Alt du ser, er hvad grundværktøjet kan. Et godt pejlemærke, før du selv går i gang.'
     }
   };
 
@@ -167,6 +271,12 @@
 
     var toggle = document.querySelector('[data-lang-toggle]');
     if (toggle) toggle.setAttribute('data-lang-next', lang === 'en' ? 'da' : 'en');
+
+    /* Anything built in JS — the carousel's dots and counter — cannot carry a
+       data-i18n attribute, so it relabels itself off this. */
+    try {
+      document.dispatchEvent(new CustomEvent('bitsy:lang', { detail: { lang: lang } }));
+    } catch (e) {}
   }
 
   function init() {
